@@ -35,6 +35,12 @@ $('.subjects .item').map(item => {
 	$('.header a', item).on('click', () => item.classList.toggle('active'));
 });
 
+// Save course selection
+$('nav .save').on('click', function(){
+	this.classList.add('active');
+	document.forms[0].submit();
+}, {once: true});
+
 // Logout confirmation
 $('.logout').on('click', e => {
 	if(!confirm('Möchtest du dich wirklich abmelden?\nDadurch werden alle deine Daten auf diesem Gerät gelöscht.')) e.preventDefault();

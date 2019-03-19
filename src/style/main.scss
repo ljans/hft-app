@@ -591,6 +591,18 @@ $sqrt2: 1.4142;
 				
 				&:not([href]) { color: $icon; }
 			}
+			
+			&.save {
+				&::after { content: attr(data-idle); }
+				
+				&.active {
+					color: $secondary;
+					
+					&::after { content: attr(data-active); }
+					
+					@extend .icon, .icon-prepend, .icon-spin, .icon-spinner;
+				}
+			}
 		}
 		
 		select {
