@@ -131,11 +131,9 @@
 				for(let index in object) if((
 					(name == 'lectures' && index == 'start') ||
 					(name == 'lectures' && index == 'end') ||
-					(name == 'infos' && index == 'date') ||
 					(name == 'events' && index == 'start') ||
 					(name == 'events' && index == 'end') ||
-					(name == 'messages' && index == 'sent') ||
-					(name == 'messages' && index == 'read')
+					(name == 'messages' && index == 'sent')
 				) && object[index]) object[index] = new Date(object[index]);
 				
 				// Insert data
