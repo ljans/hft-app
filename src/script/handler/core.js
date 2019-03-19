@@ -80,7 +80,6 @@ class CoreHandler {
 				
 				// Filter meals
 				data.meals = meals.filter(meal => meal.date == dates[index]);
-				data.empty = data.meals.length == 0;
 			
 				// Render options
 				data.options = dates.map(item => ({
@@ -213,7 +212,6 @@ class CoreHandler {
 			} break;
 			case 'professors': {
 				data.professors = await IDB.professors.all();
-				data.empty = data.professors.length == 0;
 			} break;
 			case 'printers': {
 				data.printers = await IDB.printers.all();
