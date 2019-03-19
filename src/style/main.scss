@@ -656,8 +656,6 @@ $sqrt2: 1.4142;
 	overflow: auto;
 	-webkit-overflow-scrolling: touch;
 	
-	@at-root body[data-page="lectures"] { height: 100%; }
-	
 	.col {
 		white-space: normal;
 		flex-shrink: 0;
@@ -665,16 +663,11 @@ $sqrt2: 1.4142;
 		
 		.head {
 			height: 50px;
-			position: sticky;
-			position: -webkit-sticky;
-			background-color: rgba(#FFF, 0.95);
-			top: 0;
-			z-index: 1;
+			background-color: #FFF;
 			display: flex;
 			flex-direction: column;
 			align-items: center;
 			justify-content: center;
-			border-bottom: 1px solid $border;
 			padding: 0 20px;
 					
 			.day {
