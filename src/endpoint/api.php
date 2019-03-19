@@ -66,7 +66,11 @@ try {
 				INNER JOIN courses ON (courses.id = lectures.course AND courses.subject = lectures.subject) 
 				WHERE enrollments.user = ? ORDER BY start
 			', $device['username']);
-			while($lecture = $query['lectures']->fetch()) $response['lectures'][] = $lecture;
+			while($lecture = $query['lectures']->fetch()) {
+				$lecture['start'] = (new Datetime($lecture['start']))->format('c');
+				$lecture['end'] = (new Datetime($lecture['end']))->format('c');
+				$response['lectures'][] = $lecture;
+			}
 			
 			// Add exams
 			$response['exams'] = [];
