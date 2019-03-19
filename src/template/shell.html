@@ -5,7 +5,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta name="google" content="notranslate">
 		
-		<title>HFT App &middot; {{page.title}}</title>
+		<title>HFT App &middot; {{title}}</title>
 		
 		<link rel="stylesheet" href="/style/main.scss">
 		
@@ -20,11 +20,11 @@
 		<script src="/script/client.js" defer></script>
 		<script src="/script/insight.js" defer></script>
 	</head>
-	<body data-page="{{page.name}}">
+	<body>
 		<header>
 			<div class="container">
 				<a class="menu icon" href="/menu"></a>
-				<div class="title">{{page.title}}</div>
+				<div class="title">{{title}}</div>
 				<a class="{{#unread.length}}unread{{/unread.length}} messages icon" href="/messages"></a>
 			</div>
 		</header>

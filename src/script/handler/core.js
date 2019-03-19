@@ -33,10 +33,7 @@ class CoreHandler {
 			version: this.controller.version,
 			username: await IDB.server.get('username'),
 			device: await IDB.server.get('device'),
-			page: {
-				name: page,
-				title: '{{PAGE.'+page.toUpperCase()+'.TITLE}}'
-			}
+			title: '{{PAGE.'+page.toUpperCase()+'.TITLE}}',
 		}
 		
 		// Setup tabs
