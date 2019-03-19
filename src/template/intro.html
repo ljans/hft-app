@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="de">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="author" content="Lukas Jans">
+		<meta name="generator" content="Luniverse Handcrafted">
+		<meta name="keywords" content="HFT, Hochschule für Technik, Stuttgart, App, Download, Vorlesungen, Kurse, Mensa, Termine, Noten, Luniverse">
+		<meta name="description" content="Vorlesungen, Termine und mehr auf deinem Smartphone.">
+		<meta name="google" content="notranslate">
+	
+		<title>HFT App &middot; Für dein Studium</title>
+		
+		<link rel="icon" type="image/png" href="image/favicon.png">
+		
+		<link rel="stylesheet" href="/style/intro.scss">
+		
+		{{>cookie-consent}}
+		
+		<meta property="og:url" content="https://hft-app.de/">
+		<meta property="og:title" content="HFT App &middot; Für dein Studium">
+		<meta property="og:description" content="Vorlesungen, Termine und mehr auf deinem Smartphone.">
+		<!--<meta property="og:type" content="website">-->
+		<meta property="og:locale" content="de_DE">
+		<meta property="og:image" content="https://hft-app.de/image/icon.png">
+		<meta property="og:image:type" content="image/png">
+		<meta property="og:image:width" content="192">
+		<meta property="og:image:height" content="192">
+		
+		<script src="/script/insight.js" defer></script>
+	</head>
+	<body>
+		<div class="bar">
+			<a href="/install" class="container">
+				<div class="app">
+					<img class="logo" src="/image/icon.png" alt="Icon">
+					<div class="info">
+						<div class="title">HFT App</div>
+						<div class="description">
+							<span class="short">Weiter zur Installation</span>
+							<span class="long">Öffne diese Seite auf deinem Smartphone, um die App zu installieren.</span>
+						</div>
+					</div>
+				</div>
+				
+				<span class="icon icon-cloud-download"></span>
+			</a>
+		</div>
+	
+		{{#articles}}
+			<article>
+				<div class="container">
+					<div class="description">
+						<h2>{{title}}</h2>
+						{{#description}}
+							<p>{{.}}</p>
+						{{/description}}
+					</div>
+					<div class="screenshot">
+						<img src="/image/intro/{{name}}.png" alt="{{name}}">
+					</div>
+				</div>
+			</article>
+		{{/articles}}
+	
+		<div class="banner">
+			<div class="container">
+				<div class="icon icon-prepend icon-info-circle"></div>
+				<div class="text">Diese App wurde von Studenten für Studenten entwickelt und ist daher keine offizielle Software der HFT Stuttgart.</div>
+			</div>
+		</div>
+		
+		<footer>
+			<span>
+				<a href="https://github.com/luniverse/hft-app" title="GitHub Repository" target="_blank" class="icon icon-prepend icon-github-alt">hft-app</a> 
+				&middot; <a href="//luniversity.de/info/imprint" title="Impressum" target="_blank">Impressum</a>
+			<span>
+		</footer>
+		
+		<cookie-consent class="corporate">Diese App nutzt Cookies zur Verbesserung und Analyse des Angebots. Durch eine weitere Nutzung stimmst du dem zu.</cookie-consent>
+	</body>
+</html>

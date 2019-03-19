@@ -1,0 +1,17 @@
+{
+	"lang": "de",
+	"name": "HFT App",
+	"short_name": "HFT App",
+	"display": "standalone",
+	"start_url": "/launch",
+	"orientation": "portrait",
+	"background_color": "#FAFBFC",
+	"theme_color": "#D41A17",
+	"icons": [
+		{
+		  "src": "image/icon.png",
+		  "type": "image/png",
+		  "sizes": "192x192"
+		}
+	]
+}

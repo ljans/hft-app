@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script src="/script/idb.min.js"></script>
+		<script>
+			(async () => {
+				{{! Important: carry IDB version from service.version.server }}
+				IDB.open({server: {}});
+				await IDB.server.put(localStorage.getItem('device'), 'device');
+				await IDB.server.put(localStorage.getItem('username'), 'username');
+				await IDB.server.put(localStorage.getItem('displayname'), 'displayname');
+				location = '/launch';
+			})();
+		</script>
+	</head>
+</html>

@@ -1,0 +1,143 @@
+<?php
+
+// Load dependencies
+foreach(['db', 'guard', 'config', 'request', 'gateway', 'collection'] as $dependency) require "$dependency.php";
+foreach(['lsf', 'hft', 'sws'] as $gateway) require "gateway/$gateway.php";
+foreach(['exams', 'courses', 'subjects', 'lectures', 'events', 'professors', 'meals'] as $collection) require "collection/$collection.php";
+
+// Controller
+class Controller {
+	public $db, $lsf, $hft, $sws, $guard;
+	
+	// Constructor
+	public function __construct() {
+		$this->db = new DB(Config::DB_USER, Config::DB_PASS, Config::DB_NAME);
+		$this->lsf = new Gateway\LSF();
+		$this->hft = new Gateway\HFT();
+		$this->sws = new Gateway\SWS();
+		$this->guard = new Guard($this->db);
+	}
+	
+	// Generate random token
+	public static function token($length) {
+		$token = ''; $pool = [];
+		for($i=0; $i<=9; $i++) $pool[] = $i;
+		for($i=65; $i<=90; $i++) $pool[] = chr($i);
+		for($i=97; $i<=122; $i++) $pool[] = chr($i);
+		for($i=0; $i<$length; $i++) $token.= $pool[rand(0, count($pool)-1)];
+		return $token;
+	}
+	
+	// Filter array
+	public static function filter($array, $keys) {
+		return array_intersect_key($array, array_flip($keys));
+	}
+	
+	// Get request parameter
+	public static function get($index) {
+		return isset($_REQUEST[$index]) ? $_REQUEST[$index] : NULL;
+	}
+	
+	// Perform login from cache or network
+	public function login($username, $password) {
+		
+		// Load cached user
+		$query['user'] = $this->db->query('SELECT username, password, displayname, enabled FROM users WHERE username = ?', $username);
+		$cached = $query['user']->rowCount() == 1;
+		
+		// Check credentials against cache
+		if($cached) {
+			$user = $query['user']->fetch();
+			
+			// Disabled user
+			if(!$user['enabled']) throw new Exception('disabled');
+			
+			// Check credentials
+			if($user['password'] == base64_encode($password)) {
+				$this->user = $user;
+				return true;
+			}
+		}
+		
+		// Check credentials against network
+		if($this->lsf->login($username, $password)) {
+			$this->user = $this->lsf->session;
+			
+			// Insert or update user
+			$this->db->query('
+				INSERT INTO users (username, displayname, password) 
+				VALUES (:username, :displayname, :password)
+				ON DUPLICATE KEY UPDATE displayname = :displayname, password = :password
+			', [
+				'username' => $this->user['username'],
+				'password' => base64_encode($password),
+				'displayname' => $this->user['displayname'],
+			]);
+			
+			// User initialization
+			if(!$cached) {
+				
+				// Load exams
+				$exams = new Collection\Exams($this->user['username']);
+				$exams->fetch($this->lsf);
+				$exams->write($this->db);
+				
+				// Setup welcome message
+				$this->db->query('INSERT INTO messages (receiver, title, text, href) VALUES (:receiver, :title, :text, :href)', [
+					'receiver' => $this->user['username'],
+					'title' => 'Hallo '.strstr($this->user['displayname'], ' ', true).'!',
+					'text' => 'Lorem ipsum dolor sit amet',
+					'href' => '/courses',
+				]);
+			}
+			
+			// Logout at gateway
+			$this->lsf->logout();
+			
+			// Return login state
+			return true;
+		} return false;
+	}
+	
+	// Register device
+	public function register() {
+		$this->user['device'] = self::token(64);
+		$this->db->query('INSERT INTO devices (id, user) VALUES (:device, :username)', self::filter($this->user, ['device', 'username']));
+	}
+	
+	// Send notification
+	public function notify($added) {
+		/*
+		// Setup notification
+		$name = explode(' ', $user['displayname']);
+		$subject = count($added) > 1 ? 'Prüfungsergebnisse - '.$added[0]['title'].' und '.(count($added) - 1).' mehr' : 'Prüfungsergebnis - '.$added[0]['title'];
+		$info = count($added) > 1 ? 'Es liegen neue Prüfungsergebnisse für dich vor:' : 'Es liegt ein neues Prüfungsergebnis für dich vor:';
+		$list = implode("\r\n", array_map(function($exam){ return ($exam['grade'] > 0 ? $exam['grade']."\t" : $exam['status'])."\t".$exam['title']; }, $added));
+		
+		// Send notification
+		$sent = mail($user['username'].'@hft-stuttgart.de', $subject,
+			"Hallo ".$name[0]."!\r\n".
+			$info."\r\n\r\n".
+			$list."\r\n\r\n".
+			"Bitte beachte, dass es kurze Zeit dauern kann, bis neue Prüfungsergebnisse in der App angezeigt werden.\r\n".
+			"Diese Benachrichtigung wurde automatisch erstellt. Falls du keine weiteren Benachrichtigungen erhalten möchtest, antworte einfach auf diese Email.",
+	
+			"Return-Path: HFT App <info@hft-app.de>\r\n".
+			"Reply-To: HFT App <info@hft-app.de>\r\n".
+			"From: HFT App <info@hft-app.de>\r\n".
+			"Organization: Luniverse\r\n".
+			"Content-Type: text/plain; charset=utf-8\r\n".
+			"X-Priority: 3\r\n".
+			"X-Mailer: PHP/".phpversion()."\r\n".
+			"MIME-Version: 1.0\r\n"
+		);
+		
+		// Log notification
+		$controller->db->query('INSERT INTO mails (username, subject, sent) VALUES (:username, :subject, :sent)', [
+			'username' => $user['username'],
+			'subject' => $subject,
+			'sent' => var_export($sent, true)
+		]);
+		*/
+	}
+}

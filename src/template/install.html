@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="de">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="author" content="Lukas Jans">
+		<meta name="generator" content="Luniverse Handcrafted">
+		<meta name="keywords" content="HFT, Hochschule für Technik, Stuttgart, App, Download, Vorlesungen, Kurse, Mensa, Termine, Noten, Luniverse">
+		<meta name="description" content="Vorlesungen, Termine und mehr auf deinem Smartphone.">
+		<meta name="google" content="notranslate">
+	
+		<title>HFT App &middot; Installieren</title>
+	
+		<link rel="icon" type="image/png" href="image/favicon.png">
+		
+		<link rel="stylesheet" href="/style/page.scss">
+	
+		<link rel="manifest" href="/manifest.json">
+		
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+		<link rel="apple-touch-icon" sizes="192x192" href="/image/icon.png">
+		
+		{{! iPhone 5, 5s, 5c, SE !}}
+		<link rel="apple-touch-startup-image" href="/image/launch/640x1136.jpg" media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)">
+		
+		{{! iPhone 6, 6s, 7, 8 !}}
+		<link rel="apple-touch-startup-image" href="/image/launch/750x1334.jpg" media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2)">
+		
+		{{! iPhone 6+, 6s+, 7+, 8+ !}}
+		<link rel="apple-touch-startup-image" href="/image/launch/1242x2208.jpg" media="(device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3)">
+		
+		{{! iPhone X, Xs !}}
+		<link rel="apple-touch-startup-image" href="/image/launch/1125x2436.jpg" media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3)">
+		
+		{{! iPhone Xr !}}
+		<link rel="apple-touch-startup-image" href="/image/launch/828x1792.jpg" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2)">
+		
+		{{! iPhone Xs Max !}}
+		<link rel="apple-touch-startup-image" href="/image/launch/1242x2688.jpg" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3)">
+		
+		<script>if(!("serviceWorker" in navigator)) location = "/error/incompatible";</script>
+		<script src="/script/insight.js" defer></script>
+	</head>
+	<body>
+		<header>
+			<div class="container">
+				<h1>
+					<span class="light">Hochschule </span>
+					<span class="bold">für&nbsp;Technik</span>
+				</h1>
+			</div>
+		</header>
+		
+		<section class="install">
+			<div class="container">
+				<div class="icons">
+					<span class="icon icon-mobile"></span>
+					<span class="icon icon-cloud-download"></span>
+				</div>
+				
+				<div class="info">
+					<p>Folge den Anweisungen, um die App auf deinem {{home}} zu installieren.</p>
+				</div>
+			
+				<ul class="steps">
+					<li>
+						<p>{{step}}</p>
+					</li>
+					<li>
+						<p>Wähle "Zum {{home}} hinzufügen".</p>
+					</li>
+					<li>
+						<p>Schließe diese Seite und starte die App.</p>
+					</li>
+				</ul>
+				
+				<div class="info">
+					<p class="icon icon-prepend icon-info-circle">
+						<a class="underlined" href="//luniversity.de/help/general/app#information" title="Zur Hilfeseite" target="_blank">Warum nicht im {{store}}?</a>
+					</p>
+				</div>
+			</div>
+		</section>
+		
+		<footer>
+			<span>
+				<a href="https://github.com/luniverse/hft-app" title="GitHub Repository" target="_blank" class="icon icon-prepend icon-github-alt">hft-app</a> &middot; 
+				<a href="//luniversity.de/info/imprint" title="Impressum" target="_blank">Impressum</a>
+			</span>
+		</footer>
+	</body>
+</html>

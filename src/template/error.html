@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="de">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="google" content="notranslate">
+
+		<title>HFT App &middot; Fehler</title>
+		
+		<link rel="stylesheet" href="/style/page.scss">
+		
+		<script src="/script/insight.js" defer></script>
+	</head>
+	<body>
+		<header>
+			<div class="container">
+				<h1>
+					<span class="light">Hochschule </span>
+					<span class="bold">für&nbsp;Technik</span>
+				</h1>
+			</div>
+		</header>
+		
+		<section>
+			<div class="container">
+				<div class="icons">
+					{{#icons}}
+						<span class="icon icon-{{.}}"></span>
+					{{/icons}}
+				</div>
+				<div class="info">
+					{{#infos}}
+						<p>{{.}}</p>
+					{{/infos}}
+				</div>
+				{{#action}}
+					<div class="action">
+						<a href="{{href}}">{{title}}</a>
+					</div>
+				{{/action}}
+			</div>
+		</section>
+		
+		<footer>
+			<div class="container">
+				<span>
+					<a href="https://github.com/luniverse/hft-app" title="GitHub Repository" target="_blank" class="icon icon-prepend icon-github-alt">hft-app</a> &middot; 
+					<a href="//luniversity.de/info/imprint" title="Impressum" target="_blank">Impressum</a>
+				</span>
+			</div>
+		</footer>
+	</body>
+</html>

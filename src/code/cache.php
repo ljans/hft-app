@@ -1,0 +1,165 @@
+<?php class Cache {
+	private $controller, $refreshed;
+	
+	// Constructor
+	public function __construct($controller) {
+		$this->controller = $controller;
+		
+		// Setup rate limiting
+		$this->controller->lsf->requestLimit = 3.0;
+		$this->controller->hft->requestLimit = 3.0;
+		
+		// Reset refresh times
+		$this->refreshed = [
+			'meals' => 0,
+			'events' => 0,
+			'subjects' => 0,
+			'professors' => time(),
+		];
+	}
+	
+	// This method refreshes a single cache and then returns so that control messages can be handled
+	public function cycle() {
+		
+		// Skip maintenance period
+		if(date('H') < 2) return sleep(10);
+				
+		// Clear inactive devices and users
+		$this->controller->db->query('DELETE FROM devices WHERE active < ADDDATE(CURRENT_TIMESTAMP, INTERVAL -3 MONTH) AND active IS NOT NULL');
+		$this->controller->db->query('DELETE FROM users WHERE active < ADDDATE(CURRENT_TIMESTAMP, INTERVAL -1 YEAR) AND active IS NOT NULL');
+		
+		// Refresh subjects
+		if(time() - $this->refreshed['subjects'] > 60*60*24) {
+			$this->refreshed['subjects'] = time();
+			
+			// Fetch subjects
+			$subjects = new Collection\Subjects();
+			$subjects->fetch($this->controller->lsf);
+			$subjects->write($this->controller->db);
+			
+			// Log action
+			return Service::log($subjects->length().' subjects refreshed');
+		}
+		
+		// Refresh events
+		if(time() - $this->refreshed['events'] > 60*60*24) {
+			$this->refreshed['events'] = time();
+			
+			// Fetch events
+			$events = new Collection\Events();
+			$events->fetch($this->controller->hft);
+			$events->write($this->controller->db);
+			
+			// Log action
+			return Service::log($events->length().' events refreshed');
+		}
+		
+		// Refresh meals
+		if(time() - $this->refreshed['meals'] > 60*60*24) {
+			$this->refreshed['meals'] = time();
+			
+			// Fetch meals
+			$meals = new Collection\Meals();
+			$meals->fetch($this->controller->sws);
+			$meals->write($this->controller->db);
+			
+			// Log action
+			return Service::log($meals->length().' meals refreshed');
+		}
+		
+		// Refresh professors
+		if(time() - $this->refreshed['professors'] > 60*60*24*7) {
+			$this->refreshed['professors'] = time();
+			
+			// Fetch professors
+			$professors = new Collection\Professors();
+			$professors->fetch($this->controller->hft);
+			$professors->write($this->controller->db);
+			
+			// Log action
+			return Service::log($professors->length().' professors refreshed');
+		}
+		
+		// Refresh courses and lectures by subject
+		{
+			$query['subject'] = $this->controller->db->query('
+				SELECT id, parallelid FROM subjects 
+				WHERE refreshed IS NULL OR refreshed < ADDDATE(CURRENT_TIMESTAMP, INTERVAL -1 DAY) 
+				ORDER BY refreshed ASC LIMIT 1
+			');
+			
+			// A subject has to be refreshed
+			if($query['subject']->rowCount() == 1) {
+				$subject = $query['subject']->fetch();
+				
+				// Update refresh time
+				$this->controller->db->query('UPDATE subjects SET refreshed = CURRENT_TIMESTAMP WHERE id = ?', $subject['id']);
+				
+				// Fetch courses
+				$courses = new Collection\Courses($subject);
+				$courses->fetch($this->controller->lsf);
+				$courses->write($this->controller->db);
+				
+				// Fetch lectures
+				$lectures = new Collection\Lectures($subject);
+				$lectures->fetch($this->controller->lsf);
+				$lectures->write($this->controller->db);
+					
+				// Log action
+				return Service::log($courses->length().' courses with a total of '.$lectures->length().' lectures refreshed for subject '.$subject['id']);
+			}
+		}
+		
+		// Refresh users
+		{
+			$query['user'] = $this->controller->db->query('
+				SELECT username, password FROM users 
+				WHERE (refreshed IS NULL OR refreshed < ADDDATE(CURRENT_TIMESTAMP, INTERVAL -15 MINUTE)) 
+				AND valid IS TRUE AND enabled IS TRUE 
+				ORDER BY refreshed ASC LIMIT 1
+			');
+			
+			// A user has to be refreshed
+			if($query['user']->rowCount() == 1) {
+				$user = $query['user']->fetch();
+				
+				// Update refresh time
+				$this->controller->db->query('UPDATE users SET refreshed = CURRENT_TIMESTAMP WHERE username = ?', $user['username']);
+				
+				// Login at gateway
+				if(!$this->controller->lsf->login($user['username'], base64_decode($user['password']))) {
+					return $this->controller->db->query('UPDATE users SET valid = FALSE WHERE username = ?', $user['username']);
+				}
+
+				// Read old state
+				$old = new Collection\Exams($user['username']);
+				$old->read($this->controller->db);
+			
+				// Write new state
+				$new = new Collection\Exams($user['username']);
+				$new->fetch($this->controller->lsf);
+				$new->write($this->controller->db);
+			
+				// Logout at gateway
+				$this->controller->lsf->logout();
+				
+				// Determine added exams
+				$added = [];
+				foreach($new->list() as $test) {
+					foreach($old->list() as $compare) {
+						if($compare['id'] == $test['id'] && $compare['try'] == $test['try']) continue 2;
+					} $added[] = $test;
+				}
+				
+				// Send notification
+				if(count($added) > 0) $this->controller->notify($added);
+				
+				// Log action
+				return Service::log($new->length().' exams refreshed for user '.$user['username']);
+			}
+		}
+		
+		// Service idle
+		return sleep(1);
+	}
+}

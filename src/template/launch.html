@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script>
+			(async () => {
+				if(!('serviceWorker' in navigator)) location = '/error/incompatible';
+				await navigator.serviceWorker.register('/index.js');
+				await navigator.serviceWorker.ready;
+				location.reload();
+			})();
+		</script>
+	</head>
+</html>
