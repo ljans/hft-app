@@ -38,7 +38,7 @@ try {
 		// Course enrollment
 		case 'enroll': {
 			$controller->db->query('DELETE FROM enrollments WHERE user = ?', $device['username']);
-			foreach($_REQUEST['courses'] as $subject => $courses) {
+			if(isset($_REQUEST['courses'])) foreach($_REQUEST['courses'] as $subject => $courses) {
 				foreach($courses as $course => $state) {
 					if($state) $controller->db->query('INSERT INTO enrollments (user, subject, course) VALUES (?, ?, ?)', [$device['username'], $subject, $course]);
 				}
