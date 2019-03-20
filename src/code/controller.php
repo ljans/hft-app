@@ -42,7 +42,7 @@ class Controller {
 	public function login($username, $password) {
 		
 		// Load cached user
-		$query['user'] = $this->db->query('SELECT username, password, displayname, enabled FROM users WHERE username = ?', $username);
+		$query['user'] = $this->db->query('SELECT username, password, displayname, enabled, valid FROM users WHERE username = ?', $username);
 		$cached = $query['user']->rowCount() == 1;
 		
 		// Check credentials against cache
@@ -53,7 +53,7 @@ class Controller {
 			if(!$user['enabled']) throw new Exception('disabled');
 			
 			// Check credentials
-			if($user['password'] == base64_encode($password)) {
+			if($user['valid'] && $user['password'] == base64_encode($password)) {
 				$this->user = $user;
 				return true;
 			}
@@ -67,7 +67,7 @@ class Controller {
 			$this->db->query('
 				INSERT INTO users (username, displayname, password) 
 				VALUES (:username, :displayname, :password)
-				ON DUPLICATE KEY UPDATE displayname = :displayname, password = :password
+				ON DUPLICATE KEY UPDATE displayname = :displayname, password = :password, valid = TRUE
 			', [
 				'username' => $this->user['username'],
 				'password' => base64_encode($password),
