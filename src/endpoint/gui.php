@@ -65,8 +65,12 @@ switch($page) {
 			'step' => 'Tippe auf <span class="icon icon-ellipsis-v"></span> am rechten oberen Bildschirmende.'
 		];
 		
-		// Unsupported browser
-		else header('Location: /error/incompatible');
+		// Other browser
+		else Elements::$data = [
+			'store' => 'App Store',
+			'home' => 'Startbildschirm',
+			'step' => 'Öffne die Optionen deines Browsers.'
+		];
 	} break;
 	
 	// Error template
