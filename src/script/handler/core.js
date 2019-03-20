@@ -254,8 +254,8 @@ class CoreHandler {
 								title: 'Freunde einladen'
 							},{
 								url: 'https://github.com/luniverse/hft-app',
-								icon: 'code-fork',
-								title: 'Selbst mitmachen',
+								icon: 'puzzle-piece',
+								title: 'Selbst mitwirken',
 								blank: true
 							},{
 								url: 'https://www.paypal.me/luniverse/5',
