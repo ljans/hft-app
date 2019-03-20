@@ -104,40 +104,4 @@ class Controller {
 		$this->user['device'] = self::token(64);
 		$this->db->query('INSERT INTO devices (id, user) VALUES (:device, :username)', self::filter($this->user, ['device', 'username']));
 	}
-	
-	// Send notification
-	public function notify($added) {
-		/*
-		// Setup notification
-		$name = explode(' ', $user['displayname']);
-		$subject = count($added) > 1 ? 'Prüfungsergebnisse - '.$added[0]['title'].' und '.(count($added) - 1).' mehr' : 'Prüfungsergebnis - '.$added[0]['title'];
-		$info = count($added) > 1 ? 'Es liegen neue Prüfungsergebnisse für dich vor:' : 'Es liegt ein neues Prüfungsergebnis für dich vor:';
-		$list = implode("\r\n", array_map(function($exam){ return ($exam['grade'] > 0 ? $exam['grade']."\t" : $exam['status'])."\t".$exam['title']; }, $added));
-		
-		// Send notification
-		$sent = mail($user['username'].'@hft-stuttgart.de', $subject,
-			"Hallo ".$name[0]."!\r\n".
-			$info."\r\n\r\n".
-			$list."\r\n\r\n".
-			"Bitte beachte, dass es kurze Zeit dauern kann, bis neue Prüfungsergebnisse in der App angezeigt werden.\r\n".
-			"Diese Benachrichtigung wurde automatisch erstellt. Falls du keine weiteren Benachrichtigungen erhalten möchtest, antworte einfach auf diese Email.",
-	
-			"Return-Path: HFT App <info@hft-app.de>\r\n".
-			"Reply-To: HFT App <info@hft-app.de>\r\n".
-			"From: HFT App <info@hft-app.de>\r\n".
-			"Organization: Luniverse\r\n".
-			"Content-Type: text/plain; charset=utf-8\r\n".
-			"X-Priority: 3\r\n".
-			"X-Mailer: PHP/".phpversion()."\r\n".
-			"MIME-Version: 1.0\r\n"
-		);
-		
-		// Log notification
-		$controller->db->query('INSERT INTO mails (username, subject, sent) VALUES (:username, :subject, :sent)', [
-			'username' => $user['username'],
-			'subject' => $subject,
-			'sent' => var_export($sent, true)
-		]);
-		*/
-	}
 }

@@ -115,6 +115,7 @@
 			$query['user'] = $this->controller->db->query('
 				SELECT username, password FROM users 
 				WHERE (refreshed IS NULL OR refreshed < ADDDATE(CURRENT_TIMESTAMP, INTERVAL -15 MINUTE)) 
+				AND active > ADDDATE(CURRENT_TIMESTAMP, INTERVAL -3 MONTH) 
 				AND valid IS TRUE AND enabled IS TRUE 
 				ORDER BY refreshed ASC LIMIT 1
 			');
@@ -151,8 +152,18 @@
 					} $added[] = $test;
 				}
 				
-				// Send notification
-				if(count($added) > 0) $this->controller->notify($added);
+				// Add message
+				if(count($added) > 0) {
+					$text = '<ul>';
+					foreach($added as $exam) $text.= '<li>'.$exam['title'].'</li>';
+					$text.= '</ul>';
+					$this->controller->db->query('INSERT INTO messages (receiver, title, text, href) VALUES (:receiver, :title, :text, :href)', [
+						'receiver' => $user['username'],
+						'title' => count($added) > 1 ? 'Neue Prüfungsergebnisse' : 'Neues Prüfungsergebnis',
+						'text' => $text,
+						'href' => '/exams',
+					]);
+				}
 				
 				// Log action
 				return Service::log($new->length().' exams refreshed for user '.$user['username']);
