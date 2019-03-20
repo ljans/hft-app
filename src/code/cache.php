@@ -28,6 +28,22 @@
 		$this->controller->db->query('DELETE FROM devices WHERE active < ADDDATE(CURRENT_TIMESTAMP, INTERVAL -3 MONTH) AND active IS NOT NULL');
 		$this->controller->db->query('DELETE FROM users WHERE active < ADDDATE(CURRENT_TIMESTAMP, INTERVAL -1 YEAR) AND active IS NOT NULL');
 		
+		// Send notifications
+		$query['messages'] = $this->controller->db->query('SELECT * FROM messages WHERE notified IS NULL');
+		while($message = $query['messages']->fetch()) {
+			$this->controller->db->query('UPDATE messages SET notified = CURRENT_TIMESTAMP WHERE id = ?', $message['id']);
+			mail($message['receiver'].'@hft-stuttgart.de', $message['title'], '<html><body>'.$message['text'].'</body></html>', 
+				"Return-Path: HFT App <info@hft-app.de>\r\n".
+				"Reply-To: HFT App <info@hft-app.de>\r\n".
+				"From: HFT App <info@hft-app.de>\r\n".
+				"Organization: Luniverse\r\n".
+				"Content-Type: text/html; charset=utf-8\r\n".
+				"X-Priority: 3\r\n".
+				"X-Mailer: PHP/".phpversion()."\r\n".
+				"MIME-Version: 1.0\r\n"
+			);
+		}
+		
 		// Refresh subjects
 		if(time() - $this->refreshed['subjects'] > 60*60*24) {
 			$this->refreshed['subjects'] = time();
