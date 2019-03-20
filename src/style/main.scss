@@ -29,6 +29,7 @@ body {
 	background-color: $primary;
 	font-size: 16px;
 	color: #1D2129;
+	overscroll-behavior: none;	// FIX: Prevents pull-to-refresh on Android devices
 }
 
 input[type=submit] { -webkit-appearance: none; }
