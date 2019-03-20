@@ -305,11 +305,11 @@ class CoreHandler {
 		IDB.server.put(page, 'page');	
 		
 		// Load templates
-		const content = await caches.match('/template/_'+page+'.html').then(response => response.text());
-		const shell = await caches.match('/template/shell.html').then(response => response.text());
+		const content = await this.controller.fetch('/template/_'+page+'.html').then(response => response.text());
+		const shell = await this.controller.fetch('/template/shell.html').then(response => response.text());
 		
 		// Load language file
-		const lang = await caches.match('/lang/de.json').then(response => response.json());
+		const lang = await this.controller.fetch('/lang/de.json').then(response => response.json());
 		
 		// Render html
 		const combined = shell.replace('{{>content}}', content);

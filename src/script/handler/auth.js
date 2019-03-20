@@ -33,7 +33,7 @@ class AuthHandler {
 				}
 				
 				// Render input
-				let template = await caches.match('/template/login.html').then(response => response.text());
+				let template = await this.controller.fetch('/template/login.html').then(response => response.text());
 				return Elements.render(template, data);
 			}
 			

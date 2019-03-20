@@ -145,6 +145,11 @@
 		await IDB.server.put(new Date(result.refreshed), 'refreshed');
 	}
 	
+	// Fetch a resource
+	async fetch(request) {
+		return await caches.match(request) || await fetch(request);
+	}
+	
 	// Query API
 	async query(call) {
 		
