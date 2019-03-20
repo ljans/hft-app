@@ -52,7 +52,6 @@
 			'/template/_menu.html',
 			'/template/_printers.html',
 			'/template/_professors.html',
-			'/template/_start.html',
 			'/template/_tips.html',
 			'/template/shell.html',
 			'/template/login.html'
