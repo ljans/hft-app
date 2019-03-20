@@ -1,15 +1,17 @@
-<div class="list">
-	<div class="container">
-		{{#messages}}
-			<a {{#href}}href="{{.}}"{{/href}} class="message article">
-				<div class="date icon-prepend icon">
-					{{#sent}}
-						{{d}}.{{m}}.{{Y}}
-					{{/sent}}
-				</div>
-				<div class="title">{{title}}</div>
-				<div class="description">{{text}}</div>
-			</a>
-		{{/messages}}
+<div class="wrapper">
+	<div class="list">
+		<div class="container">
+			{{#messages}}
+				<a {{#href}}href="{{.}}"{{/href}} class="message article">
+					<div class="date icon-prepend icon">
+						{{#sent}}
+							{{d}}.{{m}}.{{Y}}
+						{{/sent}}
+					</div>
+					<div class="title">{{title}}</div>
+					<div class="description">{{text}}</div>
+				</a>
+			{{/messages}}
+		</div>
 	</div>
 </div>

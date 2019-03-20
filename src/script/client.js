@@ -1,5 +1,5 @@
-// Prevent header and footer from putting the scroll focus on the body
-$('header, footer').on('touchmove', e => e.preventDefault());
+// Prevent header, footer and nav from putting the scroll focus on the body
+$('header, footer, nav').on('touchmove', e => e.preventDefault());
 
 // Prevent the wrapper from scrolling to the limit and bubbling to the body
 $('.wrapper').on('touchstart', function(){

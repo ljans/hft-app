@@ -1,11 +1,13 @@
 {{^printers.length}}
-	<div class="screen container">
-		<div class="icon-files-o icon"></div>
-		<div class="title">Keine Drucker</div>
-		<div class="line"></div>
-		<div class="info">
-			<p>Es wurden keine Daten geladen.</p>
-			<p>Bitte versuche es später erneut.</p>
+	<div class="wrapper">
+		<div class="screen container">
+			<div class="icon-files-o icon"></div>
+			<div class="title">Keine Drucker</div>
+			<div class="line"></div>
+			<div class="info">
+				<p>Es wurden keine Daten geladen.</p>
+				<p>Bitte versuche es später erneut.</p>
+			</div>
 		</div>
 	</div>
 {{/printers.length}}
@@ -18,25 +20,27 @@
 		</div>
 	</nav>
 	
-	<div class="list">
-		<div class="container">
-			{{#printers}}
-				<div class="printer article">
-					<div class="title">{{title}}</div>
-					<div class="data">
-						<div class="room info icon icon-prepend">{{room}}</div>
-						<div class="size info icon icon-prepend">{{sizes}}</div>
-						<div class="type info icon icon-prepend">{{type}}</div>
+	<div class="wrapper">
+		<div class="list">
+			<div class="container">
+				{{#printers}}
+					<div class="printer article">
+						<div class="title">{{title}}</div>
+						<div class="data">
+							<div class="room info icon icon-prepend">{{room}}</div>
+							<div class="size info icon icon-prepend">{{sizes}}</div>
+							<div class="type info icon icon-prepend">{{type}}</div>
+						</div>
 					</div>
-				</div>
-			{{/printers}}
+				{{/printers}}
+			</div>
 		</div>
-	</div>
-	
-	<div class="note">
-		<div class="container">
-			<p>Druckerstandorte</p>
-			<p>© <a href="http://www.hft-stuttgart.de/" target="_blank">Hochschule für Technik Stuttgart</a></p>
+		
+		<div class="note">
+			<div class="container">
+				<p>Druckerstandorte</p>
+				<p>© <a href="http://www.hft-stuttgart.de/" target="_blank">Hochschule für Technik Stuttgart</a></p>
+			</div>
 		</div>
 	</div>
 {{/printers.length}}
