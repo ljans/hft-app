@@ -764,6 +764,16 @@ nav {
 		& + .item { border-top: 1px solid #F1F2F3; }
 	}
 	
+	.checkbox {
+		display: flex;
+		align-items: center;
+		
+		&::before {
+			font-size: 20px;
+			flex-shrink: 0;
+		}
+	}
+	
 	.header {
 		display: flex;
 		
@@ -791,7 +801,7 @@ nav {
 		
 	.courses {
 		display: none;
-		padding-left: 26px;
+		padding-left: 34px;
 		
 		label {
 			display: block;
