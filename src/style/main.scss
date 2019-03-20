@@ -16,35 +16,23 @@ $sqrt2: 1.4142;
 		-webkit-tap-highlight-color: rgba(0,0,0,0);
 	}
 	
-	html { height: 100%; }
-	body {
+	html, body {
+		height: 100%;
 		width: 100%;
-		min-height: 100%;
+		position: fixed;
+		overflow: hidden;
+		-webkit-overflow-scrolling: auto;
+	}
+	
+	body {
 		margin: 0;
 		font-family: -apple-system, system-ui, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
 		position: relative;
 		display: flex;
 		flex-direction: column;
-		justify-content: space-between;
 		background-color: $primary;
 		font-size: 16px;
 		color: #1D2129;
-		overflow-x: auto;
-		overflow-y: auto;
-		overscroll-behavior: none;	// FIX: Prevents pull-to-refresh on Android devices
-		
-		// FIX: Emulates the desired background-color because the status bar has always the real background-color
-		&::before {
-			content: '';
-			display: block;
-			background-color: $background;
-			position: fixed;
-			top: 0;
-			left: 0;
-			right: 0;
-			bottom: 0;
-			z-index: -1;
-		}
 	}
 	
 	input[type=submit] { -webkit-appearance: none; }
@@ -87,26 +75,25 @@ $sqrt2: 1.4142;
 		padding: 0 15px;
 	}
 	
+	.wrapper {
+		flex-grow: 1;
+		overflow: auto;
+		-webkit-overflow-scrolling: touch;
+		background-color: $background;
+	}
+	
+	.content {
+		display: flex;
+		flex-direction: column;
+		position: relative;
+	}
+	
 	header {
 		background: linear-gradient($primary, darken($primary, 3%));
-		position: -webkit-sticky;
-		position: sticky;
-		top: 0;
 		color: #FFF;
 		z-index: 10;
 		box-shadow: $shadow;
 		font-size: 22px;
-		
-		// FIX: prevent iOS status-bar overlay
-		&::before {
-			content: '';
-			width: 100%;
-			height: 30px;
-			background-color: $primary;
-			display: block;
-			transform: translate(0, -29px);
-			position: fixed;
-		}
 		
 		.container {
 			height: 60px;
@@ -138,11 +125,6 @@ $sqrt2: 1.4142;
 	footer {
 		background: linear-gradient(rgba(255,255,255,0.97), rgba($background, 0.97));
 		border-top: 1px solid $border;
-		position: -webkit-sticky;
-		position: sticky;
-		bottom: 0;
-		margin-top: auto;
-		z-index: 10;
 		
 		.container {
 			height: 64px;
@@ -446,7 +428,7 @@ $sqrt2: 1.4142;
 	.screen {
 		color: $secondary;
 		text-align: center;
-		margin-top: auto;
+		margin: auto;
 		
 		.icon {
 			font-size: 64px;
@@ -566,7 +548,7 @@ $sqrt2: 1.4142;
 		background-color: rgba(#FFF, 0.95);
 		position: -webkit-sticky;
 		position: sticky;
-		top: 60px;
+		top: 0;
 		border-bottom: 1px solid $border;
 		color: $secondary;
 		z-index: 9;
@@ -665,9 +647,6 @@ $sqrt2: 1.4142;
 
 .timetable { $height: 13px;
 	display: flex;
-	white-space: nowrap;
-	overflow: auto;
-	-webkit-overflow-scrolling: touch;
 	
 	.col {
 		white-space: normal;
@@ -675,13 +654,17 @@ $sqrt2: 1.4142;
 		height: (44*$height) + 50px;
 		
 		.head {
-			height: 50px;
-			background-color: #FFF;
+			height: 54px;
+			background-color: rgba(#FFF, 0.95);
 			display: flex;
 			flex-direction: column;
 			align-items: center;
 			justify-content: center;
 			padding: 0 20px;
+			position: sticky;
+			position: -webkit-sticky;
+			top: 0;
+			z-index: 1;
 					
 			.day {
 				font-size: 14px;
