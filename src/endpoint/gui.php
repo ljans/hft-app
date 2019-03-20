@@ -140,7 +140,7 @@ switch($page) {
 						'Der Zugriff wurde verweigert. Dies kann passieren, wenn du dein Passwort geändert hast.',
 						'Bitte melde dich erneut an.'
 					], 'action' => [
-						'href' => '/logout',
+						'href' => '/login',
 						'title' => 'Jetzt anmelden'
 					]
 				];
