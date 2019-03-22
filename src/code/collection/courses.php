@@ -12,7 +12,7 @@ class Courses extends \Collection {
 		$this->list = [];
 		
 		// Parse courses
-		$view = $gateway->fetch($gateway::host.'?state=wplan&act=stg&show=liste&P.Print&k_abstgv.abstgvnr='.$this->subject['id']);
+		$view = $gateway->fetch($gateway::host.'?state=wplan&act=stg&show=liste&P.Print&k_abstgv.abstgvnr='.$this->subject['id'].'&k_parallel.parallelid='.$this->subject['parallelid']);
 		foreach($view->query('//table/tr[position() > 1]/td[2]/a') as $link) {
 			
 			// Parse course details
