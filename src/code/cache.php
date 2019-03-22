@@ -48,6 +48,9 @@
 		if(time() - $this->refreshed['subjects'] > 60*60*24) {
 			$this->refreshed['subjects'] = time();
 			
+			// Log action
+			Service::log('refreshing subjects');
+			
 			// Fetch subjects
 			$subjects = new Collection\Subjects();
 			$subjects->fetch($this->controller->lsf);
@@ -60,6 +63,9 @@
 		// Refresh events
 		if(time() - $this->refreshed['events'] > 60*60*24) {
 			$this->refreshed['events'] = time();
+			
+			// Log action
+			Service::log('refreshing events');
 			
 			// Fetch events
 			$events = new Collection\Events();
@@ -74,6 +80,9 @@
 		if(time() - $this->refreshed['meals'] > 60*60*24) {
 			$this->refreshed['meals'] = time();
 			
+			// Log action
+			Service::log('refreshing meals');
+			
 			// Fetch meals
 			$meals = new Collection\Meals();
 			$meals->fetch($this->controller->sws);
@@ -86,6 +95,9 @@
 		// Refresh professors
 		if(time() - $this->refreshed['professors'] > 60*60*24*7) {
 			$this->refreshed['professors'] = time();
+			
+			// Log action
+			Service::log('refreshing professors');
 			
 			// Fetch professors
 			$professors = new Collection\Professors();
@@ -107,6 +119,9 @@
 			// A subject has to be refreshed
 			if($query['subject']->rowCount() == 1) {
 				$subject = $query['subject']->fetch();
+				
+				// Log action
+				Service::log('refreshing courses and lectures of subject '.$subject['id']);
 				
 				// Update refresh time
 				$this->controller->db->query('UPDATE subjects SET refreshed = CURRENT_TIMESTAMP WHERE id = ?', $subject['id']);
@@ -142,6 +157,9 @@
 				
 				// Update refresh time
 				$this->controller->db->query('UPDATE users SET refreshed = CURRENT_TIMESTAMP WHERE username = ?', $user['username']);
+				
+				// Log action
+				Service::log('refreshing exams for user '.$user['username']);
 				
 				// Login at gateway
 				if(!$this->controller->lsf->login($user['username'], base64_decode($user['password']))) {
