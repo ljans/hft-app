@@ -10,10 +10,11 @@
 		<link rel="stylesheet" href="/style/main.scss">
 		
 		<script>
-			{{! Add username to insight report }}
+			{{! Add metrics to insight report }}
 			var _paq = _paq || [];
-			_paq.push(['setUserId', '{{username}}']);
-			_paq.push(['setCustomDimension', 1, '{{device}}']);
+			{{#username}}_paq.push(['setUserId', '{{.}}']);{{/username}}
+			{{#device}}_paq.push(['setCustomDimension', 1, '{{.}}']);{{/device}}
+			{{#version}}_paq.push(['setCustomDimension', 2, '{{.}}']);{{/version}}
 		</script>
 		
 		<script src="/script/lu.min.js" defer></script>
