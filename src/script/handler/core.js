@@ -253,14 +253,13 @@ class CoreHandler {
 								icon: 'whatsapp',
 								title: 'Freunde einladen'
 							},{
-								url: 'https://github.com/luniverse/hft-app',
+								url: 'mailto:info@hft-app.de?subject=Feedback',
+								icon: 'star-o',
+								title: 'Feedback senden'
+							},{
+								url: 'https://github.com/luniverse/hft-app/fork',
 								icon: 'puzzle-piece',
 								title: 'Selbst mitwirken',
-								blank: true
-							},{
-								url: 'https://www.paypal.me/luniverse/5',
-								icon: 'gift',
-								title: 'Danke sagen',
 								blank: true
 							}
 						]
