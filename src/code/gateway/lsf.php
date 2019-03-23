@@ -11,7 +11,7 @@ class LSF extends \Gateway {
 	public function fetch($url, $data=[]) {
 		$request = $this->request($url, $data);
 		
-		// Add session-cookie and synthetic referrer
+		// Add session cookie
 		if(isset($this->session)) $request->setCookie('JSESSIONID', $this->session['id']);
 		
 		// Submit request and return view
@@ -22,7 +22,7 @@ class LSF extends \Gateway {
 	public function login($username, $password): bool {
 		
 		// Submit request
-		$request = new \Request(self::host.'?state=user&type=1&category=auth.login', ['asdf' => $username, 'fdsa' => $password]);
+		$request = $this->request(self::host.'?state=user&type=1&category=auth.login', ['asdf' => $username, 'fdsa' => $password]);
 		$view = parent::load($request->submit());
 		
 		// Extract session
