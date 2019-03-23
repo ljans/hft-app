@@ -1,7 +1,7 @@
 <?php
 
 // Load dependencies
-foreach(['db', 'guard', 'config', 'request', 'gateway', 'collection'] as $dependency) require "$dependency.php";
+foreach(['db', 'guard', 'config', 'request', 'gateway', 'collection', 'crypto'] as $dependency) require "$dependency.php";
 foreach(['lsf', 'hft', 'sws'] as $gateway) require "gateway/$gateway.php";
 foreach(['exams', 'courses', 'subjects', 'lectures', 'events', 'professors', 'meals'] as $collection) require "collection/$collection.php";
 
@@ -11,6 +11,7 @@ class Controller {
 	
 	// Constructor
 	public function __construct() {
+		Crypto::init(Config::CRYPTO_KEY, Config::CRYPTO_IV);
 		$this->db = new DB(Config::DB_USER, Config::DB_PASS, Config::DB_NAME);
 		$this->lsf = new Gateway\LSF();
 		$this->hft = new Gateway\HFT();
@@ -53,7 +54,7 @@ class Controller {
 			if(!$user['enabled']) throw new Exception('disabled');
 			
 			// Check credentials
-			if($user['valid'] && $user['password'] == base64_encode($password)) {
+			if($user['valid'] && $user['password'] == $password) {
 				$this->user = $user;
 				return true;
 			}
@@ -70,7 +71,7 @@ class Controller {
 				ON DUPLICATE KEY UPDATE displayname = :displayname, password = :password, valid = TRUE
 			', [
 				'username' => $this->user['username'],
-				'password' => base64_encode($password),
+				'password' => $password,
 				'displayname' => $this->user['displayname'],
 			]);
 			

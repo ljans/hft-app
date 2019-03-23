@@ -8,9 +8,9 @@ try {
 	// Check and log access
 	if(!$controller->guard->pass()) throw new Exception('cooldown');
 		
-	// Login request
+	// Login request (trim username because LSF ignores whitespaces)
 	if(!isset($_REQUEST['username']) || !isset($_REQUEST['password']) || !isset($_REQUEST['accepted'])) throw new Exception('missing credentials');
-	$response['login'] = $controller->login(trim($_REQUEST['username']), $_REQUEST['password']); // Trim because LSF also accepts usernames padded in whitespace
+	$response['login'] = $controller->login(trim($_REQUEST['username']), Crypto::encrypt($_REQUEST['password']));
 	
 	// Register device and add user data
 	if($response['login']) {

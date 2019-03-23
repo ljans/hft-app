@@ -22,7 +22,7 @@ class LSF extends \Gateway {
 	public function login($username, $password): bool {
 		
 		// Submit request
-		$request = $this->request(self::host.'?state=user&type=1&category=auth.login', ['asdf' => $username, 'fdsa' => $password]);
+		$request = $this->request(self::host.'?state=user&type=1&category=auth.login', ['asdf' => $username, 'fdsa' => \Crypto::decrypt($password)]);
 		$view = parent::load($request->submit());
 		
 		// Extract session

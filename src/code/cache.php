@@ -162,7 +162,7 @@
 				Service::log('refreshing exams for user '.$user['username']);
 				
 				// Login at gateway
-				if(!$this->controller->lsf->login($user['username'], base64_decode($user['password']))) {
+				if(!$this->controller->lsf->login($user['username'], $user['password'])) {
 					return $this->controller->db->query('UPDATE users SET valid = FALSE WHERE username = ?', $user['username']);
 				}
 
