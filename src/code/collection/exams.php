@@ -38,11 +38,11 @@ class Exams extends \Collection {
 		
 		// Parse menu
 		$link = $gateway->fetch($gateway::host.'?state=change&type=1&moduleParameter=studyPOSMenu&next=menu.vm&xml=menu')->query('//a[.="Notenspiegel"]');
-		if($link->length == 0) throw new \Exception('a{Notenspiegel}');
+		if($link->length == 0) throw new \Warning('a{Notenspiegel}');
 		
 		// Parse graduations
 		$graduation = $gateway->fetch($link[0]->getAttribute('href'))->query('//ul[@class="treelist"]/li[@class="treelist"][1]/a[@href]');
-		if($graduation->length == 0) throw new \Exception('ul.treelist > li.treelist:first-child a[href]');
+		if($graduation->length == 0) throw new \Warning('ul.treelist > li.treelist:first-child a[href]');
 		
 		// Parse exams
 		$this->list = [];

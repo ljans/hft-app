@@ -38,10 +38,8 @@
 				
 				// Exception handling
 				try { return call_user_func($this->runner); }
-				catch(Exception $e) {
-					self::log($e->getMessage());
-					return error_log($e);
-				}
+				catch(Warning $e) { return self::log('WARNING: '.$e->getMessage()); }
+				catch(Exception $e) { return error_log($e); }
 			}
 			
 			// Stop the service

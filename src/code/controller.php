@@ -5,6 +5,9 @@ foreach(['db', 'guard', 'config', 'request', 'gateway', 'collection', 'crypto'] 
 foreach(['lsf', 'hft', 'sws'] as $gateway) require "gateway/$gateway.php";
 foreach(['exams', 'courses', 'subjects', 'lectures', 'events', 'professors', 'meals'] as $collection) require "collection/$collection.php";
 
+// Warning exception
+class Warning extends Exception {}
+
 // Controller
 class Controller {
 	public $db, $lsf, $hft, $sws, $guard;
@@ -51,7 +54,7 @@ class Controller {
 			$user = $query['user']->fetch();
 			
 			// Disabled user
-			if(!$user['enabled']) throw new Exception('disabled');
+			if(!$user['enabled']) throw new Warning('disabled');
 			
 			// Check credentials
 			if($user['valid'] && $user['password'] == $password) {

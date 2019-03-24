@@ -32,11 +32,11 @@ class Request {
 		
 		// Load response
 		$response = curl_exec($this->handler);
-		if(!$response) throw new Exception('gateway');
+		if(!$response) throw new Warning('gateway');
 		
 		// Check status code
 		$status = curl_getinfo($this->handler, CURLINFO_HTTP_CODE);
-		if($status != 200) throw new Exception('503');
+		if($status != 200) throw new Warning('503');
 		
 		// Return response
 		return $response;

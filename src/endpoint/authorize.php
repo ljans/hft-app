@@ -6,10 +6,10 @@ try {
 	$response = ['status' => 'OK'];
 	
 	// Check and log access
-	if(!$controller->guard->pass()) throw new Exception('cooldown');
+	if(!$controller->guard->pass()) throw new Warning('cooldown');
 		
 	// Login request (trim username because LSF ignores whitespaces)
-	if(!isset($_REQUEST['username']) || !isset($_REQUEST['password']) || !isset($_REQUEST['accepted'])) throw new Exception('missing credentials');
+	if(!isset($_REQUEST['username']) || !isset($_REQUEST['password']) || !isset($_REQUEST['accepted'])) throw new Warning('missing credentials');
 	$response['login'] = $controller->login(trim($_REQUEST['username']), Crypto::encrypt($_REQUEST['password']));
 	
 	// Register device and add user data
