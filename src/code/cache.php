@@ -25,8 +25,10 @@
 		if(date('H') < 2) return sleep(10);
 				
 		// Clear inactive devices and users
-		$this->controller->db->query('DELETE FROM devices WHERE active < ADDDATE(CURRENT_TIMESTAMP, INTERVAL -3 MONTH) AND active IS NOT NULL');
-		$this->controller->db->query('DELETE FROM users WHERE active < ADDDATE(CURRENT_TIMESTAMP, INTERVAL -1 YEAR) AND active IS NOT NULL');
+		$devices = $this->controller->db->query('DELETE FROM devices WHERE active < ADDDATE(CURRENT_TIMESTAMP, INTERVAL -3 MONTH) AND active IS NOT NULL');
+		$users = $this->controller->db->query('DELETE FROM users WHERE active < ADDDATE(CURRENT_TIMESTAMP, INTERVAL -1 YEAR) AND active IS NOT NULL');
+		if($devices->rowCount() > 0) Service::log('cleared '.$devices->rowCount().' devices');
+		if($users->rowCount() > 0) Service::log('cleared '.$users->rowCount().' users');
 		
 		// Send notifications
 		$query['messages'] = $this->controller->db->query('SELECT * FROM messages WHERE notified IS NULL');
@@ -163,6 +165,7 @@
 				
 				// Login at gateway
 				if(!$this->controller->lsf->login($user['username'], $user['password'])) {
+					Service::log('invalidated user '.$user['username']);
 					return $this->controller->db->query('UPDATE users SET valid = FALSE WHERE username = ?', $user['username']);
 				}
 
