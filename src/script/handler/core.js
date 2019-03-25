@@ -11,7 +11,7 @@ class CoreHandler {
 	
 	// URL pattern
 	get pattern() {
-		return /^\/(meals|exams|events|lectures|professors|courses|printers|tips|menu|messages)(?:\/(.+))?\/?/i;
+		return /\/(meals|exams|events|lectures|professors|courses|printers|tips|menu|messages|notifications)(?:\/(.+))?\/?/i;
 	}
 	
 	// Color palette
@@ -34,13 +34,13 @@ class CoreHandler {
 			username: await IDB.server.get('username'),
 			device: await IDB.server.get('device'),
 			title: '{{PAGE.'+page.toUpperCase()+'.TITLE}}',
-		}
+		};
 		
 		// Setup tabs
 		data.tabs = this.tabs.map(name => ({
 			name: name,
 			title: '{{PAGE.'+name.toUpperCase()+'.TAB}}',
-			active: name == page
+			active: name === page
 		}));
 		
 		// Extract page data
@@ -148,7 +148,7 @@ class CoreHandler {
 						'title': event.title,
 						'description': event.description,
 						'query': query.join('&')
-					}
+					};
 					
 					// Add time range
 					if(event.start <= this.today) data.range = event.end ? 'Aktuell' : 'Heute';
@@ -156,19 +156,19 @@ class CoreHandler {
 					if(event.end) data.range+= ' – '+Elements.render('{{j}}. {{DATE.F.{{n}}}}', event.end);
 					return data;	
 				});
-			};
+			} break;
 			case 'exams': {
 				const exams = await IDB.exams.all();
 				
 				// List exams
 				data.exams = exams.map(exam => {
-					const pass = exam.status == 'bestanden';
+					const pass = exam.status === 'bestanden';
 					
 					// Collect infos
 					var infos = [];
 					if(exam.date) infos.push(exam.date);
 					if(parseInt(exam.cp) > 0) infos.push(parseInt(exam.cp)+' CP');
-					if(exam.try) infos.push([, 'Erst', 'Zweit', 'Dritt'][exam.try]+'versuch');
+					if(exam.try) infos.push(['Erst', 'Zweit', 'Dritt'][exam.try]+'versuch');
 					
 					// Collect data
 					return {
@@ -190,7 +190,7 @@ class CoreHandler {
 					const start = new Date();
 					start.setDate(start.getDate() + i);
 					start.setHours(0,0,0);
-					const end = new Date()
+					const end = new Date();
 					end.setDate(end.getDate() + i);
 					end.setHours(23,59,59);
 					
@@ -293,7 +293,21 @@ class CoreHandler {
 				await IDB.server.put(new Date(), 'read');
 				
 				data.messages = await IDB.messages.all();
-			}
+			} break;
+			case 'notifications': {
+                // Process input
+                if(request.GET.has('submit')) {
+                    await this.controller.query({
+                        endpoint: 'api',
+                        action: 'notification',
+                        payload: request.POST,
+                    });
+                    await this.controller.refresh();
+                    return Response.redirect('menu');
+                }
+
+				data.notifications = await IDB.server.get("notifications");
+			} break;
 		}
 		
 		// Get unread messages

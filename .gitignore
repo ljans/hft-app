@@ -2,3 +2,6 @@ _notes/
 /src/code/config.php
 /src/web.config
 /src/bin/
+/src/vendor/
+.idea/
+*.iml

@@ -10,7 +10,7 @@ try {
 	
 	// Select device
 	$query['device'] = $controller->db->query('
-		SELECT devices.id, users.username, users.password, users.enabled, users.valid FROM devices 
+		SELECT devices.id, devices.push is not NULL as push, users.username, users.password, users.enabled, users.valid FROM devices 
 		INNER JOIN users ON (devices.user = users.username) 
 		WHERE devices.id = ?
 	', $controller::get('device'));
@@ -44,6 +44,23 @@ try {
 				}
 			}
 		} break;
+
+        // PushNotification registration
+        case 'notification': {
+            if(isset($_REQUEST["push"]) && isset($_REQUEST["pushData"])) {
+                $controller->db->query('UPDATE devices SET push = ? WHERE id = ?', [$_REQUEST["pushData"], $controller::get('device')]);
+            } else if(!isset($_REQUEST["push"])) {
+                $controller->db->query('UPDATE devices SET push = NULL WHERE id = ?', [$controller::get('device')]);
+            }
+
+            $notifyOverEmail = isset($_REQUEST["email"]);
+            $notifyAboutExam = isset($_REQUEST["exam"]);
+            $notifyAboutLectureChanges = isset($_REQUEST["lectureChanges"]);
+
+            $controller->db->query('UPDATE users SET notifyOverEmail = ?, notifyAboutExam = ?, notifyAboutLectureChanges = ?  WHERE username = ?',
+                [$notifyOverEmail, $notifyAboutExam, $notifyAboutLectureChanges, $device['username']]);
+
+        } break;
 		
 		// Refresh data
 		case 'refresh': {
@@ -131,6 +148,19 @@ try {
 			$response['tips'] = [];
 			$query['tips'] = $controller->db->query('SELECT * FROM tips ORDER BY sort ASC');
 			while($tip = $query['tips']->fetch()) $response['tips'][] = $tip;
+
+			// Add notification preferences
+            $query['notificationsUser'] = $controller->db->query('SELECT notifyOverEmail, notifyAboutLectureChanges, notifyAboutExam FROM users WHERE username = ?', $device['username']);
+            $notificationsUser = $query['notificationsUser']->fetch();
+
+            $notifications = [
+                "push" => $device["push"] == 1,
+                "email" => $notificationsUser["notifyOverEmail"] == 1,
+                "exam" => $notificationsUser["notifyAboutExam"] == 1,
+                "lectureChanges" => $notificationsUser["notifyAboutLectureChanges"] == 1,
+            ];
+
+            $response['notifications'] = $notifications;
 			
 			// Add cache age
 			$refreshed = $controller->db->query('SELECT refreshed FROM users WHERE username = ?', $device['username'])->fetch();

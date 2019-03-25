@@ -1,7 +1,7 @@
 <?php
 
 // Load dependencies
-foreach(['db', 'guard', 'config', 'request', 'gateway', 'collection', 'crypto'] as $dependency) require "$dependency.php";
+foreach(['db', 'guard', 'config', 'request', 'gateway', 'collection', 'crypto', 'notification'] as $dependency) require "$dependency.php";
 foreach(['lsf', 'hft', 'sws'] as $gateway) require "gateway/$gateway.php";
 foreach(['exams', 'courses', 'subjects', 'lectures', 'events', 'professors', 'meals'] as $collection) require "collection/$collection.php";
 

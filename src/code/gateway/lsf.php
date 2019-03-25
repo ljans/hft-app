@@ -19,7 +19,7 @@ class LSF extends \Gateway {
 	}
 	
 	// Perform login
-	public function login($username, $password): bool {
+	public function login($username, $password) {
 		
 		// Submit request
 		$request = $this->request(self::host.'?state=user&type=1&category=auth.login', ['asdf' => $username, 'fdsa' => \Crypto::decrypt($password)]);
@@ -40,7 +40,7 @@ class LSF extends \Gateway {
 	}
 	
 	// Perform logout
-	public function logout(): void {
+	public function logout() {
 		$this->fetch(self::host.'?state=user&type=4&category=auth.logout');
 		unset($this->session);
 	}

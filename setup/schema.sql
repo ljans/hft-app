@@ -43,6 +43,7 @@ CREATE TABLE `devices` (
   `id` varchar(64) NOT NULL,
   `user` varchar(10) NOT NULL,
   `active` datetime DEFAULT NULL,
+  `push` varchar(2000) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `user` (`user`),
   CONSTRAINT `devices_ibfk_1` FOREIGN KEY (`user`) REFERENCES `users` (`username`) ON DELETE CASCADE ON UPDATE CASCADE
@@ -126,6 +127,28 @@ CREATE TABLE `lectures` (
   CONSTRAINT `lectures_ibfk_1` FOREIGN KEY (`course`) REFERENCES `courses` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `lectures_ibfk_2` FOREIGN KEY (`subject`) REFERENCES `subjects` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=27853 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `lectures`
+--
+CREATE TABLE `lecture_changes` (
+  `day` date NOT NULL,
+  `number` varchar(15) NOT NULL,
+  `start` time NOT NULL,
+  `end` time NOT NULL,
+  `title` varchar(50) NOT NULL,
+  `professor` varchar(50) NOT NULL,
+  `room` varchar(45) NOT NULL,
+  `comment` varchar(120) NOT NULL,
+  `course` int(11) NOT NULL,
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`day`,`number`,`start`,`end`,`title`,`professor`,`room`,`comment`,`course`),
+  KEY `course` (`course`),
+  CONSTRAINT `lectures_changes_ibfk_1` FOREIGN KEY (`course`) REFERENCES `courses` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -260,6 +283,9 @@ CREATE TABLE `users` (
   `active` datetime DEFAULT NULL,
   `enabled` tinyint(1) NOT NULL DEFAULT '1',
   `valid` tinyint(1) NOT NULL DEFAULT '1',
+  `notifyOverEmail` tinyint(1) NOT NULL DEFAULT '1',
+  `notifyAboutExam` tinyint(1) NOT NULL DEFAULT '1',
+  `notifyAboutLectureChanges` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
