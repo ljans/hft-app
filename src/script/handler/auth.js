@@ -34,6 +34,9 @@ class AuthHandler {
 				
 				// Render input
 				let template = await this.controller.fetch('/template/login.html').then(response => response.text());
+				const header = await this.controller.fetch('/template/_header.html').then(response => response.text());
+				const footer = await this.controller.fetch('/template/_footer.html').then(response => response.text());
+				template = template.replace('{{>header}}', header).replace('{{>footer}}', footer);
 				return Elements.render(template, data);
 			}
 			

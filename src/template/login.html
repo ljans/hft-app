@@ -12,14 +12,7 @@
 		<script src="/script/insight.js" defer></script>
 	</head>
 	<body>
-		<header>
-			<div class="container">
-				<h1>
-					<span class="light">Hochschule </span>
-					<span class="bold">für&nbsp;Technik</span>
-				</h1>
-			</div>
-		</header>
+		{{>header}}
 		
 		<section class="login">
 			<div class="container">
@@ -46,11 +39,6 @@
 			</div>
 		</section>
 		
-		<footer>
-			<span>
-				<a href="https://github.com/luniverse/hft-app" title="GitHub Repository" target="_blank" class="icon icon-prepend icon-github-alt">hft-app</a> &middot; 
-				<a href="//luniversity.de/info/imprint" title="Impressum" target="_blank">Impressum</a>
-			</span>
-		</footer>
+		{{>footer}}
 	</body>
 </html>
