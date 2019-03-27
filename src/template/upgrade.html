@@ -4,11 +4,9 @@
 		<script src="/script/idb.min.js"></script>
 		<script>
 			(async () => {
-				{{! Important: carry IDB version from service.version.server }}
+				{{! Important: carry IDB version from controller }}
 				IDB.open({server: {}});
-				await IDB.server.put(localStorage.getItem('device'), 'device');
-				await IDB.server.put(localStorage.getItem('username'), 'username');
-				await IDB.server.put(localStorage.getItem('displayname'), 'displayname');
+				for(index of ['device', 'username', 'displayname']) await IDB.server.put(localStorage.getItem(index), index);
 				location = '/launch';
 			})();
 		</script>
