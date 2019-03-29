@@ -56,7 +56,7 @@ self.addEventListener('notificationclick', function (event) {
             }
             for (const client of allClients) {
                 if ('navigate' in client) {
-                    return client.navigate(notification.data.href);
+                    return client.focus().then(_ => client.navigate(notification.data.href));
                 }
             }
         })

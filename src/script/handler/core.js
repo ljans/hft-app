@@ -306,7 +306,8 @@ class CoreHandler {
                     return Response.redirect('menu');
                 }
 
-				data.notifications = await IDB.server.get("notifications");
+				data.notifications = await IDB.server.get('notifications');
+				data.pushSupported = 'pushManager' in self.registration;
 			} break;
 		}
 		

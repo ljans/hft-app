@@ -45,15 +45,17 @@
                                 </div>
                             </label>
                         </div>
-                        <div class="header">
-                            <label>
-                                <input type="checkbox" name="push" id="pushSelection" {{#notifications.push}}checked{{/notifications.push}}>
-                                <div class="icon icon-fw icon-prepend checkbox">
-                                    <span class="name">Pushbenachrichtigung</span>
-                                </div>
-                            </label>
-                        </div>
-                        <input type="hidden" name="pushData" id="pushData">
+                        {{#pushSupported}}
+                            <div class="header">
+                                <label>
+                                    <input type="checkbox" name="push" id="pushSelection" {{#notifications.push}}checked{{/notifications.push}}>
+                                    <div class="icon icon-fw icon-prepend checkbox">
+                                        <span class="name">Pushbenachrichtigung</span>
+                                    </div>
+                                </label>
+                            </div>
+                            <input type="hidden" name="pushData" id="pushData">
+                        {{/pushSupported}}
                     </div>
                 </div>
             </form>

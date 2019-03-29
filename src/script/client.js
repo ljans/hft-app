@@ -44,6 +44,7 @@ $('.subjects .item').map(item => {
 	// Open/close sub menu
 	$('.header a', item).on('click', () => item.classList.toggle('active'));
 });
+
 //Notification
 $('#pushSelection').on("change", async(item) => {
     if (item.target.checked) {
@@ -67,7 +68,7 @@ $('#pushSelection').on("change", async(item) => {
     $("#pushData").map(dataHolder => dataHolder.removeAttribute("value"));
 });
 
-// Save course selection
+// Save course/notifications selection
 $('nav .save').on('click', function(){
 	this.classList.add('active');
 	document.forms[0].submit();
