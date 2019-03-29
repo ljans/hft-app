@@ -23,12 +23,11 @@
 			'/font/awesome.woff2?v=4.7.0',
 			'/font/awesome.woff?v=4.7.0',
 			
-			/*'/image/caret.png',
-			
+			'/script/lu.min.js',
 			'/script/insight.js',
-			'/script/core.js',
+			'/script/client.js',
 			
-			'/style/core.scss',
+			'/style/main.scss',
 			'/style/page.scss',
 			
 			'/error/incompatible',
@@ -39,7 +38,8 @@
 			'/error/aborted',
 			'/error/cooldown',
 			'/error/disabled',
-			'/error/broken',*/
+			'/error/offline',
+			'/error/broken',
 			
 			'/lang/de.json',
 			
