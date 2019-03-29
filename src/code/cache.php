@@ -25,8 +25,10 @@
 		if(date('H') < 2) return sleep(10);
 				
 		// Clear inactive devices and users
-		$devices = $this->controller->db->query('DELETE FROM devices WHERE active < ADDDATE(CURRENT_TIMESTAMP, INTERVAL -3 MONTH) AND active IS NOT NULL');
-		$users = $this->controller->db->query('DELETE FROM users WHERE active < ADDDATE(CURRENT_TIMESTAMP, INTERVAL -1 YEAR) AND active IS NOT NULL');
+        $lecturesChanges = $this->controller->db->query('DELETE FROM lecture_changes WHERE day < ADDDATE(CURRENT_TIMESTAMP, INTERVAL -2 DAY )');
+        $devices = $this->controller->db->query('DELETE FROM devices WHERE active < ADDDATE(CURRENT_TIMESTAMP, INTERVAL -3 MONTH) AND active IS NOT NULL');
+        $users = $this->controller->db->query('DELETE FROM users WHERE active < ADDDATE(CURRENT_TIMESTAMP, INTERVAL -1 YEAR) AND active IS NOT NULL');
+		if($lecturesChanges->rowCount() > 0) Service::log('cleared '.$lecturesChanges->rowCount().' lecture changes');
 		if($devices->rowCount() > 0) Service::log('cleared '.$devices->rowCount().' devices');
 		if($users->rowCount() > 0) Service::log('cleared '.$users->rowCount().' users');
 
@@ -130,9 +132,23 @@
 
         // Refresh lectures changes
         {
-            $courses = new Collection\LectureChanges();
-            $courses->fetch($this->controller->lsf);
-            $courses->write($this->controller->db);
+            $lectureChanges = new Collection\LectureChanges();
+            $lectureChanges->fetch($this->controller->lsf);
+            $newLectureChanges = $lectureChanges->write($this->controller->db);
+
+            foreach ($newLectureChanges as $newLectureChange) {
+                $userQuery = $this->controller->db->query('SELECT user FROM enrollments WHERE course = ?', $newLectureChange["course"]);
+                $message = [
+                    'title' => 'Vorlesungsplanänderung ' . date("d.m.", $newLectureChange["day"]),
+                    'text' => $newLectureChange["title"] . ": " . $newLectureChange["comment"],
+                    'href' => '/exams',
+                ];
+
+                while ($user = $userQuery->fetch()) Notification::sendNotification($this->controller->db,
+                    $user["user"],
+                    $message,
+                    "lectureChange");
+            }
         }
 		
 		// Refresh users

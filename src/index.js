@@ -36,11 +36,11 @@ self.addEventListener('push', function (event) {
     const data = event.data.json();
     event.waitUntil(self.registration.showNotification(data.title, {
         body: data.text,
-        icon: "image/icon.php",
+        icon: "image/icon.png",
         data: {
             href: data.href
         }
-    }));
+    }).then(controller.refresh));
 });
 
 self.addEventListener('notificationclick', function (event) {
