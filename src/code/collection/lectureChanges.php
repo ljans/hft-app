@@ -8,8 +8,8 @@ class LectureChanges extends \Collection {
         for ($relativeDay = 0; $relativeDay < 7; $relativeDay++) {
             $day = time() + 86400 * $relativeDay;
 
-            $view = $gateway->fetch($gateway::host . '?state=currentLectures&type=1&next=CurrentLectures.vm&nextdir=ressourcenManager&navigationPosition=lectures%2CcanceledLectures&breadcrumb=canceledLectures&topitem=lectures&subitem=canceledLectures&HISCalendar_Date=' . date('d.m.Y', $day));
-            foreach ($view->query('//body//div[@class ="divcontent"]//table/tr[position() > 1]') as $row){
+            $view = $gateway->fetch($gateway::host . '?state=currentLectures&type=1&next=CurrentLectures.vm&nextdir=ressourcenManager&P.Print=&HISCalendar_Date=' . date('d.m.Y', $day));
+            foreach ($view->query('//body/table/tr[position() > 1]') as $row){
                 $link = $view->query('td[4]/a', $row)->item(0);
                 parse_str(parse_url($link->getAttribute('href'), PHP_URL_QUERY), $query);
                 $this->list[] = [
