@@ -216,6 +216,20 @@ switch($page) {
 				];
 			} break;
 			
+			// Offline
+			case 'offline': {
+				Elements::$data = [
+					'icons' => ['mobile', 'wifi'],
+					'infos' => [
+						'Der Server konnte nicht erreicht werden.',
+						'Bitte stelle sicher, dass du mit dem Internet verbunden bist.'
+					], 'action' => [
+						'href' => '/launch',
+						'title' => 'Neu starten'
+					]
+				];
+			} break;
+			
 			// Installation broken (404)
 			case 'broken': {
 				Elements::$data = [

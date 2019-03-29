@@ -154,6 +154,9 @@
 	// Query API
 	async query(call) {
 		
+		// Check connection
+		if(!navigator.onLine) throw 'offline';
+		
 		// Empty payload
 		if(!call.payload) call.payload = new URLSearchParams();
 		
