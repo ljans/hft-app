@@ -139,7 +139,7 @@ CREATE TABLE `meals` (
   `title` varchar(200) NOT NULL,
   `date` date NOT NULL,
   `price` decimal(3,2) NOT NULL,
-  `additives` varchar(50) NOT NULL,
+  `additives` varchar(100) NOT NULL,
   `photo` varchar(150) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
