@@ -1,0 +1,8 @@
+{
+  "require": {
+    "php": "^7.0",
+    "minishlink/web-push": "^2.0",
+    "ext-mysqli": "*",
+    "ext-json": "*"
+  }
+}

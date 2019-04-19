@@ -144,6 +144,7 @@
 		
 		// Set refresh timestamp
 		await IDB.server.put(new Date(result.refreshed), 'refreshed');
+		await IDB.server.put(result.notifications, 'notifications');
 	}
 	
 	// Fetch a resource

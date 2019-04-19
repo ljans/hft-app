@@ -25,26 +25,13 @@
 		if(date('H') < 2) return sleep(10);
 				
 		// Clear inactive devices and users
-		$devices = $this->controller->db->query('DELETE FROM devices WHERE active < ADDDATE(CURRENT_TIMESTAMP, INTERVAL -3 MONTH) AND active IS NOT NULL');
-		$users = $this->controller->db->query('DELETE FROM users WHERE active < ADDDATE(CURRENT_TIMESTAMP, INTERVAL -1 YEAR) AND active IS NOT NULL');
+        $lecturesChanges = $this->controller->db->query('DELETE FROM lecture_changes WHERE day < ADDDATE(CURRENT_TIMESTAMP, INTERVAL -2 DAY )');
+        $devices = $this->controller->db->query('DELETE FROM devices WHERE active < ADDDATE(CURRENT_TIMESTAMP, INTERVAL -3 MONTH) AND active IS NOT NULL');
+        $users = $this->controller->db->query('DELETE FROM users WHERE active < ADDDATE(CURRENT_TIMESTAMP, INTERVAL -1 YEAR) AND active IS NOT NULL');
+		if($lecturesChanges->rowCount() > 0) Service::log('cleared '.$lecturesChanges->rowCount().' lecture changes');
 		if($devices->rowCount() > 0) Service::log('cleared '.$devices->rowCount().' devices');
 		if($users->rowCount() > 0) Service::log('cleared '.$users->rowCount().' users');
-		
-		// Send notifications
-		$query['messages'] = $this->controller->db->query('SELECT * FROM messages WHERE notified IS NULL');
-		while($message = $query['messages']->fetch()) {
-			$this->controller->db->query('UPDATE messages SET notified = CURRENT_TIMESTAMP WHERE id = ?', $message['id']);
-			mail($message['receiver'].'@hft-stuttgart.de', $message['title'], '<html><body>'.$message['text'].'</body></html>', 
-				"Return-Path: HFT App <info@hft-app.de>\r\n".
-				"Reply-To: HFT App <info@hft-app.de>\r\n".
-				"From: HFT App <info@hft-app.de>\r\n".
-				"Organization: Luniverse\r\n".
-				"Content-Type: text/html; charset=utf-8\r\n".
-				"X-Priority: 3\r\n".
-				"X-Mailer: PHP/".phpversion()."\r\n".
-				"MIME-Version: 1.0\r\n"
-			);
-		}
+
 		
 		// Refresh subjects
 		if(time() - $this->refreshed['subjects'] > 60*60*24) {
@@ -142,6 +129,27 @@
 				return Service::log($courses->length().' courses with a total of '.$lectures->length().' lectures refreshed for subject '.$subject['id']);
 			}
 		}
+
+        // Refresh lectures changes
+        {
+            $lectureChanges = new Collection\LectureChanges();
+            $lectureChanges->fetch($this->controller->lsf);
+            $newLectureChanges = $lectureChanges->write($this->controller->db);
+
+            foreach ($newLectureChanges as $newLectureChange) {
+                $userQuery = $this->controller->db->query('SELECT user FROM enrollments WHERE course = ?', $newLectureChange["course"]);
+                $message = [
+                    'title' => 'Vorlesungsplanänderung ' . date("d.m.", $newLectureChange["day"]),
+                    'text' => $newLectureChange["title"] . ": " . $newLectureChange["comment"],
+                    'href' => '/exams',
+                ];
+
+                while ($user = $userQuery->fetch()) Notification::sendNotification($this->controller->db,
+                    $user["user"],
+                    $message,
+                    "lectureChange");
+            }
+        }
 		
 		// Refresh users
 		{
@@ -194,12 +202,15 @@
 					$text = '<ul>';
 					foreach($added as $exam) $text.= '<li>'.$exam['title'].'</li>';
 					$text.= '</ul>';
-					$this->controller->db->query('INSERT INTO messages (receiver, title, text, href) VALUES (:receiver, :title, :text, :href)', [
-						'receiver' => $user['username'],
-						'title' => count($added) > 1 ? 'Neue Prüfungsergebnisse' : 'Neues Prüfungsergebnis',
-						'text' => $text,
-						'href' => '/exams',
-					]);
+
+                    Notification::sendNotification($this->controller->db,
+                        $user['username'],
+                        [
+                            'title' => count($added) > 1 ? 'Neue Prüfungsergebnisse' : 'Neues Prüfungsergebnis',
+                            'text' => $text,
+                            'href' => '/exams',
+                        ],
+                        "exam");
 				}
 				
 				// Log action

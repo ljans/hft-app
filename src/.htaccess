@@ -1,0 +1,8 @@
+Options +FollowSymLinks
+RewriteEngine On
+RewriteRule ^(launch|meals|exams|events|lectures|professors|courses|printers|tips|menu|messages|notifications)$ endpoint/gui.php?page=launch
+RewriteRule ^intro$ endpoint/gui.php?page=intro
+RewriteRule ^install$ endpoint/gui.php?page=install
+RewriteRule ^login$ endpoint/gui.php?page=login
+RewriteRule ^upgrade$ endpoint/gui.php?page=upgrade
+

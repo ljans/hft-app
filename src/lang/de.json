@@ -33,6 +33,9 @@
 		},
 		"MESSAGES": {
 			"TITLE": "Mitteilungen"
+		},
+		"NOTIFICATIONS": {
+			"TITLE": "Benachrichtigungen"
 		}
 	},
 	

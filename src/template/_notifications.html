@@ -1,0 +1,71 @@
+<nav>
+    <div class="bar container">
+        <a href="menu">Abbrechen</a>
+        <a class="save" data-idle="Speichern" data-active="Speichert..."></a>
+    </div>
+</nav>
+
+<div class="wrapper">
+    <div class="dashboard">
+        <div class="widget">
+            <form class="notifications" method="POST" action="?submit">
+                <div class="container">
+                    <h5>Benachrichtigungen auswählen</h5>
+                </div>
+                <div class="container">
+                    <div class="item">
+                        <div class="header">
+                            <label>
+                                <input type="checkbox" name="exam" {{#notifications.exam}}checked{{/notifications.exam}}>
+                                <div class="icon icon-fw icon-prepend checkbox">
+                                    <span class="name">Prüfungsergebnisse</span>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="header">
+                            <label>
+                                <input type="checkbox" name="lectureChanges" {{#notifications.lectureChanges}}checked{{/notifications.lectureChanges}}>
+                                <div class="icon icon-fw icon-prepend checkbox">
+                                    <span class="name">Vorlesungsänderungen</span>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="container">
+                    <h5>Zustellung auswählen</h5>
+                </div>
+                <div class="container">
+                    <div class="item">
+                        <div class="header">
+                            <label>
+                                <input type="checkbox" name="email"  {{#notifications.email}}checked{{/notifications.email}}>
+                                <div class="icon icon-fw icon-prepend checkbox">
+                                    <span class="name">Email</span>
+                                </div>
+                            </label>
+                        </div>
+                        {{#pushSupported}}
+                            <div class="header">
+                                <label>
+                                    <input type="checkbox" name="push" id="pushSelection" {{#notifications.push}}checked{{/notifications.push}}>
+                                    <div class="icon icon-fw icon-prepend checkbox">
+                                        <span class="name">Pushbenachrichtigung</span>
+                                    </div>
+                                </label>
+                            </div>
+                            <input type="hidden" name="pushData" id="pushData">
+                        {{/pushSupported}}
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="note">
+        <div class="container">
+            <p>Benachrichtigungen</p>
+            <p>© <a href="http://www.hft-stuttgart.de/" target="_blank">Hochschule für Technik Stuttgart</a></p>
+        </div>
+    </div>
+</div>
