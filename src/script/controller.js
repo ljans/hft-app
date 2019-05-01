@@ -67,7 +67,6 @@
 		// Setup handlers
 		this.handlers = [
 			new LaunchHandler(this),
-			new AuthHandler(this),
 			new CoreHandler(this)
 		];
 	

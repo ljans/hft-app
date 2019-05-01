@@ -1,9 +1,11 @@
-<?php require '../code/controller.php';
-try {
-	
-	// Constructor
-	$controller = new Controller();
-	$response = ['status' => 'OK'];
+<?php
+require '../code/elements.php';
+require '../code/controller.php';
+
+// Construct controller
+$controller = new Controller();
+
+if(isset($_REQUEST['submit'])) try {
 	
 	// Check and log access
 	if(!$controller->guard->pass()) throw new Warning('cooldown');
@@ -15,18 +17,14 @@ try {
 	// Register device and add user data
 	if($response['login']) {
 		$controller->register();
-		$response += $controller->filter($controller->user, ['username', 'displayname', 'device']);
-	}
+		header('Location: launch?device='.$controller->user['device'].'&username='.$controller->user['username']);
+	} else throw new Warning('login failed');
 	
 // Exception handling
 } catch(Exception $e) {
-	$response = [
-		'status' => 'error',
-		'error' => $e->getMessage()
-	];
-	
-// Output response
-} finally {
-	header('Content-Type: application/json');
-	print json_encode($response);
+	Elements::$data['info'] = $e->getMessage();
 }
+
+// Output response
+Elements::$path = '../template/';
+print Elements::renderFile('login');

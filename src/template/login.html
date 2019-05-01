@@ -22,10 +22,13 @@
 				</div>
 				
 				<div class="info">
-					<p>Melde dich mit deinem Konto an. Deine Daten werden verschlüsselt übertragen.</p>
+					<p>
+						{{#info}}{{.}}{{/info}}
+						{{^info}}Melde dich mit deinem Konto an. Deine Daten werden verschlüsselt übertragen.{{/info}}
+					</p>
 				</div>
 			
-				<form method="POST" {{#error}}class="shaking"{{/error}} onsubmit="this.querySelector('button').classList.add('active')">
+				<form method="POST" onsubmit="this.querySelector('button').classList.add('active')">
 					<div class="group">
 						<input required name="username" type="text" placeholder="Benutzername">
 						<input required name="password" type="password" placeholder="Passwort">

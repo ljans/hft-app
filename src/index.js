@@ -5,7 +5,6 @@ self.importScripts(
 	'script/elements.min.js',
 	'script/controller.js',
 	'script/table.js',
-	'script/handler/auth.js',
 	'script/handler/launch.js',
 	'script/handler/core.js',
 );
