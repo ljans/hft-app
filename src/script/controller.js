@@ -56,7 +56,6 @@
 			'/template/_footer.html',
 			'/template/_header.html',
 			'/template/shell.html',
-			'/template/login.html'
 		];
 	}
 	
