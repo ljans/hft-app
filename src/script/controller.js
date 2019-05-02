@@ -30,17 +30,6 @@
 			'/style/main.scss',
 			'/style/page.scss',
 			
-			'/error/incompatible',
-			'/error/invalid device',
-			'/error/invalid credentials',
-			'/error/503',
-			'/error/gateway',
-			'/error/aborted',
-			'/error/cooldown',
-			'/error/disabled',
-			'/error/offline',
-			'/error/broken',
-			
 			'/lang/de.json',
 			
 			'/template/_courses.html',
@@ -78,16 +67,24 @@
 	
 	// Exception handler
 	async exceptionHandler(exception) {
-		return Response.redirect('/error/'+exception);
+		switch(exception) {
+			
+			// Redirect to login page
+			case 'InvalidDevice':
+			case 'InvalidCredentials': return Response.redirect('/login');
+				
+			// Redirect to error page
+			default: return Response.redirect('/error/'+exception);
+		}
 	}
 	
 	// Response filter
 	async responseFilter(response) {
 		
-		// Delayed redirect (coupled with auto refresh)
-		if(this.next) {
-			const redirect = Response.redirect(this.next);
-			delete this.next;
+		// Handle delayed exception (thrown at auto refresh)
+		if(this.exception) {
+			const redirect = await this.exceptionHandler(this.exception);
+			delete this.exception;
 			return redirect;
 		}
 		

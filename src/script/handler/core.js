@@ -11,7 +11,7 @@ class CoreHandler {
 	
 	// URL pattern
 	get pattern() {
-		return /^\/(meals|exams|events|lectures|professors|courses|printers|tips|menu|messages)(?:\/(.+))?\/?/i;
+		return /^\/(meals|exams|events|lectures|professors|courses|printers|tips|menu|messages|error)(?:\/(.+))?\/?/i;
 	}
 	
 	// Color palette
@@ -156,7 +156,7 @@ class CoreHandler {
 					if(event.end) data.range+= ' – '+Elements.render('{{j}}. {{DATE.F.{{n}}}}', event.end);
 					return data;	
 				});
-			};
+			} break;
 			case 'exams': {
 				const exams = await IDB.exams.all();
 				
@@ -293,7 +293,31 @@ class CoreHandler {
 				await IDB.server.put(new Date(), 'read');
 				
 				data.messages = await IDB.messages.all();
-			}
+			} break;
+			case 'error': {
+				switch(context) {
+					case 'MaintenancePeriod': {
+						data.info = [
+							'Die Server der HFT sind wegen Wartungsarbeiten nicht erreichbar.',
+							'Bitte versuche es später erneut.',
+						];
+					} break;
+					
+					case 'offline': {
+						data.info = [
+							'Der Server konnte nicht erreicht werden.',
+							'Bitte stelle sicher, dass du mit dem Internet verbunden bist.',
+						];
+					} break;
+					
+					default: {
+						data.info = [
+							'Zusätzliche Fehlerinformationen:',
+							decodeURI(context),
+						];
+					} break;
+				}
+			} break;
 		}
 		
 		// Get unread messages
