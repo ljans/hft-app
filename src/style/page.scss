@@ -216,44 +216,6 @@ section {
 			}
 		}
 	}
-		
-	&.install {
-		ul.steps {
-			counter-reset: index;
-			padding: 10px 0;
-			
-			li {
-				display: flex;
-				align-items: center;
-				
-				img.share { height: 16px; }
-				
-				img.share, .icon { padding: 0 4px; }
-				
-				p {
-					margin: 0;
-					padding: 0.8em 0;
-					flex-grow: 1;
-					border-bottom: 1px solid $border;
-				}
-				
-				&:last-child p { border: none; }
-				
-				&::before {
-					content: counter(index);
-					counter-increment: index;
-					text-shadow: 1px 1px 1px #FFF;
-					color: $primary;
-					line-height: 1;
-					font-size: 2.4em;
-					padding-right: 0.3em;
-					flex-shrink: 0;
-					width: 34px;
-					text-align: center;
-				}
-			}
-		}
-	}
 }
 
 footer {

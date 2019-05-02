@@ -1,9 +1,8 @@
 <?php
 require '../code/elements.php';
-require '../code/detect.php';
 
 // Detect page
-$page = isset($_GET['page']) && in_array($_GET['page'], ['launch', 'install', 'error', 'upgrade']) ? $_GET['page'] : 'intro';
+$page = isset($_GET['page']) && in_array($_GET['page'], ['launch', 'upgrade']) ? $_GET['page'] : 'intro';
 
 // Define specific template data
 switch($page) {
@@ -46,31 +45,6 @@ switch($page) {
 				'Hier kannst du dich auch abmelden, um die Verknüpfung mit deinem Gerät wieder aufzuheben.'
 			]
 		]];
-	} break;
-	
-	// Install template
-	case 'install': {
-		
-		// Safari on iOS
-		if(Detect::os() == 'Apple' && Detect::browser() == 'Safari') Elements::$data = [
-			'store' => 'App Store',
-			'home' => 'Home-Bildschirm',
-			'step' => 'Tippe auf <img src="/image/share.png" alt title="Share icon" class="share"> in der unteren Statusleiste.'
-		];
-		
-		// Chrome on Android
-		elseif(Detect::os() == 'Android' && Detect::browser() == 'Chrome') Elements::$data = [
-			'store' => 'Play Store',
-			'home' => 'Startbildschirm',
-			'step' => 'Tippe auf <span class="icon icon-ellipsis-v"></span> am rechten oberen Bildschirmende.'
-		];
-		
-		// Other browser
-		else Elements::$data = [
-			'store' => 'App Store',
-			'home' => 'Startbildschirm',
-			'step' => 'Öffne die Optionen deines Browsers.'
-		];
 	} break;
 }
 
