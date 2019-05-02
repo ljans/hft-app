@@ -1,15 +1,6 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<meta name="google" content="notranslate">
-
-		<title>HFT App &middot; Startet...</title>
-		
-		<link rel="stylesheet" href="/style/page.scss">
-		
-		<script src="/script/insight.js" defer></script>
 		<script>
 			(async () => {
 				if(!('serviceWorker' in navigator)) alert('Die App kann nicht gestartet werden. Bitte aktualsiere dein Browser oder Betriebssystem.');
@@ -19,22 +10,4 @@
 			})();
 		</script>
 	</head>
-	<body>
-		{{>header}}
-		
-		<section>
-			<div class="container">
-				<div class="icons">
-					<span class="icon icon-mobile"></span>
-					<span class="icon icon-cogs"></span>
-				</div>
-				<div class="info">
-					<p>Bitte warte, während die App startet...</p>
-					<p>Falls die App nicht startet, musst du den Cache deines Browsers leeren oder die App neu installieren.</p>
-				</div>
-			</div>
-		</section>
-		
-		{{>footer}}
-	</body>
 </html>

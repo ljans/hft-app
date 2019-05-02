@@ -28,7 +28,6 @@
 			'/script/client.js',
 			
 			'/style/main.scss',
-			'/style/page.scss',
 			
 			'/lang/de.json',
 			
