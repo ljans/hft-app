@@ -23,6 +23,6 @@ setInterval(async () => {
 		
 		// Perform refresh
 		try { await controller.refresh(); }
-		catch(e) { console.error(e); controller.next = '/error/'+encodeURI(e); }
+		catch(e) { controller.exception = e; }
 	}
 }, 3000);

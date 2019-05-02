@@ -73,10 +73,10 @@
 	// Response filter
 	async responseFilter(response) {
 		
-		// Delayed redirect (coupled with auto refresh)
-		if(this.next) {
-			const redirect = Response.redirect(this.next);
-			delete this.next;
+		// Handle delayed exception (thrown at auto refresh)
+		if(this.exception) {
+			const redirect = await this.exceptionHandler(this.exception);
+			delete this.exception;
 			return redirect;
 		}
 		
