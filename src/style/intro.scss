@@ -92,22 +92,6 @@ p {
 			}
 		}
 	}
-	
-	.button {
-		flex-shrink: 0;
-		color: $blue;
-		padding: 0.4em 1em 0.5em;
-		border: 1px solid currentColor;
-		border-radius: 3px;
-		text-decoration: none;
-		font-weight: 300;
-	}
-	
-	.icon {
-		flex-shrink: 0;
-		font-size: 1.5em;
-		color: $blue;
-	}
 }
 
 article {
@@ -185,20 +169,10 @@ footer {
 			}
 		}
 	}
-	
-	.bar .icon { display: none; }	
-	.bar .app .info .description .short { display: none; }
 }
 
 @media screen and (max-width: 1279px) {
 	body { font-size: 18px; }
-	
-	header {
-		height: auto;
-		padding: 5em 0 4em;
-		
-		.big { font-size: 2.8em; }
-	}
 	
 	article {
 		padding: 3em 0;
@@ -216,14 +190,7 @@ footer {
 	}
 }
 
-@media screen and (max-width: 639px) {
-	.bar .app .info .description .long { display: none; }
-	
-	header {		
-		.big { font-size: 1.8em; }
-		.small { font-size: 1em; }
-	}
-	
+@media screen and (max-width: 639px) {	
 	article {
 		padding: 1em 0;
 		
