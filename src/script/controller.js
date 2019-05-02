@@ -46,7 +46,6 @@
 			'/template/_header.html',
 			'/template/_error.html',
 			'/template/shell.html',
-			'/template/login.html'
 		];
 	}
 	
