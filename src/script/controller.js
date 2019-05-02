@@ -44,6 +44,7 @@
 			'/template/_tips.html',
 			'/template/_footer.html',
 			'/template/_header.html',
+			'/template/_error.html',
 			'/template/shell.html',
 			'/template/login.html'
 		];
