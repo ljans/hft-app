@@ -303,12 +303,19 @@ class CoreHandler {
 						];
 					} break;
 					
+					case 'offline': {
+						data.info = [
+							'Der Server konnte nicht erreicht werden.',
+							'Bitte stelle sicher, dass du mit dem Internet verbunden bist.',
+						];
+					} break;
+					
 					default: {
 						data.info = [
 							'Zusätzliche Fehlerinformationen:',
 							decodeURI(context),
 						];
-					}
+					} break;
 				}
 			} break;
 		}
