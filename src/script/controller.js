@@ -106,10 +106,6 @@
 	// Refresh data
 	async refresh() {
 		
-		// Check device (no refresh before login)
-		const device = await IDB.server.get('device');
-		if(!device) return;
-		
 		// Set check timestamp
 		await IDB.server.put(new Date(), 'checked');
 		
