@@ -84,11 +84,11 @@ class Controller {
 				$exams->write($this->db);
 				
 				// Setup welcome message
-				$this->db->query('INSERT INTO messages (receiver, title, text, href) VALUES (:receiver, :title, :text, :href)', [
+				$this->db->query('INSERT INTO messages (receiver, title, text, href, notified) VALUES (:receiver, :title, :text, :href, CURRENT_TIMESTAMP)', [
 					'receiver' => $this->user['username'],
-					'title' => 'Hallo '.strstr($this->user['displayname'], ' ', true).'!',
-					'text' => 'Lorem ipsum dolor sit amet',
-					'href' => '/courses',
+					'title' => 'Willkommen zur Beta, '.strstr($this->user['displayname'], ' ', true).'!',
+					'text' => 'Du kannst jetzt die neue Version der HFT App testen.<br>Tippe hier, um Feedback zu senden oder Fehler zu melden. Du kannst auch Screenshots anhängen.',
+					'href' => 'mailto:info@hft-app.de',
 				]);
 			}
 			
