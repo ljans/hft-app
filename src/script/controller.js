@@ -30,17 +30,6 @@
 			'/style/main.scss',
 			'/style/page.scss',
 			
-			'/error/incompatible',
-			'/error/invalid device',
-			'/error/invalid credentials',
-			'/error/503',
-			'/error/gateway',
-			'/error/aborted',
-			'/error/cooldown',
-			'/error/disabled',
-			'/error/offline',
-			'/error/broken',
-			
 			'/lang/de.json',
 			
 			'/template/_courses.html',
