@@ -1,12 +1,9 @@
 <?php
 
 // Load dependencies
-foreach(['db', 'guard', 'config', 'request', 'gateway', 'collection', 'crypto'] as $dependency) require "$dependency.php";
+foreach(['db', 'guard', 'config', 'request', 'gateway', 'collection', 'crypto', 'problem'] as $dependency) require "$dependency.php";
 foreach(['lsf', 'hft', 'sws'] as $gateway) require "gateway/$gateway.php";
 foreach(['exams', 'courses', 'subjects', 'lectures', 'events', 'professors', 'meals'] as $collection) require "collection/$collection.php";
-
-// Warning exception
-class Warning extends Exception {}
 
 // Controller
 class Controller {
@@ -54,7 +51,7 @@ class Controller {
 			$user = $query['user']->fetch();
 			
 			// Disabled user
-			if(!$user['enabled']) throw new Warning('disabled');
+			if(!$user['enabled']) throw new DisabledUser();
 			
 			// Check credentials
 			if($user['valid'] && $user['password'] == $password) {

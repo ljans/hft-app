@@ -31,7 +31,7 @@ class LSF extends \Gateway {
 		
 		// Parse displayname
 		$status = $view->query('//div[@class="divloginstatus"]/text()');
-		if($status->length == 0) throw new \Warning('div.divloginstatus {textnode}:first-child');
+		if($status->length == 0) throw new \FormatError('div.divloginstatus {textnode}:first-child');
 		$this->session = [
 			'id' => $session[1],
 			'username' => $username,

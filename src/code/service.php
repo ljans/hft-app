@@ -38,7 +38,7 @@
 				
 				// Exception handling
 				try { return call_user_func($this->runner); }
-				catch(Warning $e) { return self::log('WARNING: '.$e->getMessage()); }
+				catch(Problem $e) { return self::log('PROBLEM: '.$e->getMessage()); }
 				catch(Exception $e) { return error_log($e); }
 			}
 			

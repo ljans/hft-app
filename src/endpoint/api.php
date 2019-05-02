@@ -6,7 +6,7 @@ try {
 	$response = ['status' => 'OK'];
 	
 	// Check and log access
-	if(!$controller->guard->pass()) throw new Warning('cooldown');
+	if(!$controller->guard->pass()) throw new AccessLimit();
 	
 	// Select device
 	$query['device'] = $controller->db->query('
@@ -16,12 +16,12 @@ try {
 	', $controller::get('device'));
 	
 	// Check device
-	if($query['device']->rowCount() != 1) throw new Warning('invalid device');
+	if($query['device']->rowCount() != 1) throw new InvalidDevice();
 	else $device = $query['device']->fetch();
 	
 	// Check status
-	if(!$device['enabled']) throw new Warning('disabled');
-	if(!$device['valid']) throw new Warning('invalid credentials');
+	if(!$device['enabled']) throw new DisabledUser();
+	if(!$device['valid']) throw new InvalidCredentials();
 	
 	// Log activity
 	$controller->db->query('UPDATE devices SET active = CURRENT_TIMESTAMP WHERE id = ?', $device['id']);
@@ -138,14 +138,14 @@ try {
 		} break;
 		
 		// Invalid type
-		default: throw new Warning('invalid action');
+		default: throw new InvalidAction();
 	}
 	
 // Exception handling
 } catch(Exception $e) {
 	$response = [
 		'status' => 'error',
-		'error' => $e->getMessage()
+		'error' => get_class($e),
 	];
 	
 // Output response
