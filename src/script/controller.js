@@ -28,6 +28,7 @@
 			'/script/client.js',
 			
 			'/style/main.scss',
+			'/style/login.scss',
 			
 			'/lang/de.json',
 			
@@ -45,6 +46,7 @@
 			'/template/_header.html',
 			'/template/_error.html',
 			'/template/shell.html',
+			'/template/login.html',
 		];
 	}
 	
@@ -55,7 +57,8 @@
 		// Setup handlers
 		this.handlers = [
 			new LaunchHandler(this),
-			new CoreHandler(this)
+			new CoreHandler(this),
+			new AuthHandler(this),
 		];
 	
 		// Connect to DB

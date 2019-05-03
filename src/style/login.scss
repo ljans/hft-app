@@ -1,5 +1,11 @@
 @import 'icons';
 
+@keyframes Shake {
+	0%, 100% { margin: 0; }
+	25% { margin: 0 -4px 0 4px; }
+	75% { margin: 0 4px 0 -4px; }
+}
+
 $primary: #D41A17;
 $background: #FAFBFC;
 $text: #1D2129;
@@ -105,6 +111,8 @@ section {
 		padding-top: 30px;
 		max-width: 270px;
 		width: 100%;
+		
+		&.shaking .group { animation: Shake 0.2s 2; }
 		
 		input[type="text"], input[type="password"], button {
 			border: none;

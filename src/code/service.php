@@ -38,7 +38,7 @@
 				
 				// Exception handling
 				try { return call_user_func($this->runner); }
-				catch(Problem $e) { return self::log('PROBLEM: '.$e->getMessage()); }
+				catch(Problem $e) { return self::log('PROBLEM: '.var_export($e->getMessage(), true)); }
 				catch(Exception $e) { return error_log($e); }
 			}
 			

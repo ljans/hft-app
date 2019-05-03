@@ -8,11 +8,11 @@ class LaunchHandler {
 		return /\/launch\/?$/;
 	}
 	
-	async process(request) {
+	async process() {
 		
-		// Store token and username
-		if(request.GET.has('device')) await IDB.server.put(request.GET.get('device'), 'device');
-		if(request.GET.has('username')) await IDB.server.put(request.GET.get('username'), 'username');
+		// Check login
+		const device = await IDB.server.get('device');
+		if(!device) return Response.redirect('/login');
 		
 		// Redirect to last visited page or messages
 		const page = await IDB.server.get('page') || 'messages';

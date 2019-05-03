@@ -8,6 +8,8 @@
 		<title>HFT App &middot; Anmelden</title>
 		
 		<link rel="stylesheet" href="/style/login.scss">
+		
+		{{#error}}<script>alert('{{.}}');</script>{{/error}}
 	</head>
 	<body>
 		<header>
@@ -27,13 +29,10 @@
 				</div>
 				
 				<div class="info">
-					<p>
-						{{#info}}{{.}}{{/info}}
-						{{^info}}Melde dich mit deinem Konto an. Deine Daten werden verschlüsselt übertragen.{{/info}}
-					</p>
+					<p>Melde dich mit deinem Konto an. Deine Daten werden verschlüsselt übertragen.</p>
 				</div>
 			
-				<form method="POST" onsubmit="this.querySelector('button').classList.add('active')">
+				<form method="POST" {{#failed}}class="shaking"{{/failed}} onsubmit="this.querySelector('button').classList.add('active')">
 					<div class="group">
 						<input required name="username" type="text" placeholder="Benutzername">
 						<input required name="password" type="password" placeholder="Passwort">

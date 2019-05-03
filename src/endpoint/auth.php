@@ -1,11 +1,9 @@
-<?php
-require '../code/elements.php';
-require '../code/controller.php';
-
-// Construct controller
-$controller = new Controller();
-
-if(isset($_REQUEST['submit'])) try {
+<?php require '../code/controller.php';
+try {
+	
+	// Constructor
+	$controller = new Controller();
+	$response = ['status' => 'OK'];
 	
 	// Check and log access
 	if(!$controller->guard->pass()) throw new AccessLimit();
@@ -17,14 +15,18 @@ if(isset($_REQUEST['submit'])) try {
 	// Register device and add user data
 	if($response['login']) {
 		$controller->register();
-		header('Location: launch?device='.$controller->user['device'].'&username='.$controller->user['username']);
-	} else throw new InvalidCredentials();
+		$response += $controller->filter($controller->user, ['username', 'displayname', 'device']);
+	}
 	
 // Exception handling
 } catch(Exception $e) {
-	Elements::$data['info'] = $e->getMessage();
-}
-
+	$response = [
+		'status' => 'error',
+		'error' => get_class($e),
+	];
+	
 // Output response
-Elements::$path = '../template/';
-print Elements::renderFile('login');
+} finally {
+	header('Content-Type: application/json');
+	print json_encode($response);
+}

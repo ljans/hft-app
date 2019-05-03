@@ -5,6 +5,7 @@ self.importScripts(
 	'script/elements.min.js',
 	'script/controller.js',
 	'script/table.js',
+	'script/handler/auth.js',
 	'script/handler/launch.js',
 	'script/handler/core.js',
 );
@@ -16,6 +17,10 @@ const service = new Service(controller);
 // Setup auto-refresh
 setInterval(async () => {
 	if(!navigator.onLine) return;
+	
+	// Check device (no refresh before login)
+	const device = await IDB.server.get('device');
+	if(!device) return;
 	
 	// Check refresh interval
 	const checked = await IDB.server.get('checked');
