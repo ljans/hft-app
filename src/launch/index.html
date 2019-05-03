@@ -4,7 +4,7 @@
 		<script>
 			(async () => {
 				if(!('serviceWorker' in navigator)) alert('Die App kann nicht gestartet werden. Bitte aktualsiere dein Browser oder Betriebssystem.');
-				await navigator.serviceWorker.register('/index.js');
+				await navigator.serviceWorker.register('/sw.js');
 				await navigator.serviceWorker.ready;
 				location.reload(true);
 			})();
