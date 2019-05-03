@@ -59,9 +59,7 @@
 		];
 	
 		// Connect to DB
-		IDB.open(this.tables, {
-			upgrade: () => this.next = '/upgrade',
-		});
+		IDB.open(this.tables);
 	}
 	
 	// Exception handler
