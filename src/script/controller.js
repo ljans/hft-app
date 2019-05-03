@@ -106,10 +106,7 @@
 		await IDB.server.put(new Date(), 'checked');
 		
 		// Perform request
-		const result = await this.query({
-			endpoint: 'api',
-			action: 'refresh',
-		});
+		const result = await this.query('refresh');
 		
 		// Clear all tables but server
 		for(let name in this.tables) {
@@ -143,23 +140,20 @@
 	}
 	
 	// Query API
-	async query(call) {
+	async query(action, data) {
 		
 		// Check connection
 		if(!navigator.onLine) throw 'offline';
 		
-		// Empty payload
-		if(!call.payload) call.payload = new URLSearchParams();
-		
-		// Add device to api calls
-		if(call.endpoint == 'api') call.payload.set('device', await IDB.server.get('device'));
-		
-		// Construct target
-		let target = 'endpoint/'+call.endpoint+'.php';
-		if(call.action) target+= '?action='+call.action;
+		// Add device
+		if(!data) data = new URLSearchParams();
+		data.set('device', await IDB.server.get('device'));
 		
 		// Perform request
-		const response = await fetch(target, {method: 'POST', body: call.payload}).then(response => response.json());
+		const response = await fetch('endpoint/api.php?action='+action, {
+			method: 'POST',
+			body: data,
+		}).then(response => response.json());
 		
 		// Check response
 		if(response.status && response.status == 'OK') return response;

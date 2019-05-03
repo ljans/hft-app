@@ -49,11 +49,7 @@ class CoreHandler {
 				
 				// Process input
 				if(request.GET.has('submit')) {
-					await this.controller.query({
-						endpoint: 'api',
-						action: 'enroll',
-						payload: request.POST,
-					});
+					await this.controller.query('enroll', request.POST);
 					await this.controller.refresh();
 					return Response.redirect('/lectures');
 				}
