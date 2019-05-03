@@ -126,9 +126,6 @@
 				await IDB[name].put(object);
 			}
 		}
-		
-		// Set refresh timestamp
-		await IDB.server.put(new Date(result.refreshed), 'refreshed');
 	}
 	
 	// Fetch a resource

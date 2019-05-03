@@ -131,10 +131,6 @@ try {
 			$response['tips'] = [];
 			$query['tips'] = $controller->db->query('SELECT * FROM tips ORDER BY sort ASC');
 			while($tip = $query['tips']->fetch()) $response['tips'][] = $tip;
-			
-			// Add cache age
-			$refreshed = $controller->db->query('SELECT refreshed FROM users WHERE username = ?', $device['username'])->fetch();
-			$response['refreshed'] = (new Datetime($refreshed['refreshed']))->format('c');
 		} break;
 		
 		// Invalid type
