@@ -20,6 +20,7 @@ setInterval(async () => {
 	// Check refresh interval
 	const checked = await IDB.server.get('checked');
 	if(!checked || new Date() - checked > 15*60*1000) {
+		await IDB.server.put(new Date(), 'checked');
 		
 		// Perform refresh
 		try { await controller.refresh(); }

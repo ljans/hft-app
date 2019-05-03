@@ -102,9 +102,6 @@
 	// Refresh data
 	async refresh() {
 		
-		// Set check timestamp
-		await IDB.server.put(new Date(), 'checked');
-		
 		// Perform request
 		const result = await this.query('refresh');
 		
