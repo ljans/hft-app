@@ -23,9 +23,12 @@
 			'/font/awesome.woff2?v=4.7.0',
 			'/font/awesome.woff?v=4.7.0',
 			
-			'/script/lu.min.js',
-			'/script/insight.js',
-			'/script/client.js',
+			'/script/client/courses.js',
+			'/script/client/insight.js',
+			'/script/client/lu.min.js',
+			'/script/client/menu.js',
+			'/script/client/professors.js',
+			'/script/client/shell.js',
 			
 			'/style/main.scss',
 			'/style/login.scss',
