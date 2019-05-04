@@ -50,7 +50,6 @@ class AuthHandler {
 			
 			// Logout
 			case 'logout': {
-				this.controller.query('logout');
 				
 				// Clear tables
 				for(const table in this.controller.tables) IDB[table].clear();

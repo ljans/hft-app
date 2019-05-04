@@ -71,7 +71,7 @@
 			
 			// Redirect to login page
 			case 'InvalidDevice':
-			case 'InvalidCredentials': return Response.redirect('/login');
+			case 'InvalidCredentials': return Response.redirect('/logout');
 				
 			// Redirect to error page
 			default: return Response.redirect('/error/'+exception);
