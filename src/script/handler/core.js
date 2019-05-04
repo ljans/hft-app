@@ -289,6 +289,7 @@ class CoreHandler {
 				await IDB.server.put(new Date(), 'read');
 				
 				data.messages = await IDB.messages.all();
+				for(const message of data.messages) message.blank = message.href.startsWith('http');
 			} break;
 			case 'error': {
 				data.error = decodeURI(context);

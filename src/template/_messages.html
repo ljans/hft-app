@@ -15,7 +15,7 @@
 		<div class="list">
 			<div class="container">
 				{{#messages}}
-					<a {{#href}}href="{{.}}"{{/href}} class="message article">
+					<a {{#href}}href="{{.}}"{{/href}} {{#blank}}target="_blank"{{/blank}} class="message article">
 						<div class="date icon-prepend icon">
 							{{#sent}}
 								{{d}}.{{m}}.{{Y}}
