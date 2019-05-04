@@ -4,9 +4,14 @@
 		<div class="title">Das hat nicht geklappt</div>
 		<div class="line"></div>
 		<div class="info">
-			{{#info}}
-				<p>{{.}}</p>
-			{{/info}}
+			[[#ERROR.{{error}}]]
+				<p>[[.]]</p>
+			[[/ERROR.{{error}}]]
+			
+			[[^ERROR.{{error}}]]
+				<p>Ein unbekannter Fehler ist aufgetreten.</p>
+				<p>{{error}}</p>
+			[[/ERROR.{{error}}]]
 		</div>
 	</div>
 </div>

@@ -39,6 +39,17 @@
 		}
 	},
 	
+	"ERROR": {
+		"MaintenancePeriod": [
+			"Die Server der HFT sind wegen Wartungsarbeiten nicht erreichbar.",
+			"Bitte versuche es später erneut."
+		],
+		"offline": [
+			"Der Server konnte nicht erreicht werden.",
+			"Bitte stelle sicher, dass du mit dem Internet verbunden bist."
+		]
+	},
+	
 	"DATE": {
 		"F": [
 			null,

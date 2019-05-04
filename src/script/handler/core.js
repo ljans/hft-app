@@ -291,28 +291,7 @@ class CoreHandler {
 				data.messages = await IDB.messages.all();
 			} break;
 			case 'error': {
-				switch(context) {
-					case 'MaintenancePeriod': {
-						data.info = [
-							'Die Server der HFT sind wegen Wartungsarbeiten nicht erreichbar.',
-							'Bitte versuche es später erneut.',
-						];
-					} break;
-					
-					case 'offline': {
-						data.info = [
-							'Der Server konnte nicht erreicht werden.',
-							'Bitte stelle sicher, dass du mit dem Internet verbunden bist.',
-						];
-					} break;
-					
-					default: {
-						data.info = [
-							'Zusätzliche Fehlerinformationen:',
-							decodeURI(context),
-						];
-					} break;
-				}
+				data.error = decodeURI(context);
 			} break;
 		}
 		

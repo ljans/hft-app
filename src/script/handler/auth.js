@@ -32,16 +32,20 @@ class AuthHandler {
 					} else data.failed = true;
 					
 					// Handle error
-					if(result.error) switch(result.error) {
-						case 'MaintenancePeriod': {
-							data.error = 'Die Server der HFT sind wegen Wartungsarbeiten nicht erreichbar. Bitte versuche es später erneut.';
-						} break;
-					}
+					data.error = result.error;
 				}
 				
 				// Render template
 				let template = await this.controller.fetch('/template/login.html').then(response => response.text());
-				return Elements.render(template, data);
+				template = Elements.render(template, data);
+				
+				// Render language
+				const lang = await this.controller.fetch('/lang/de.json').then(response => response.json());
+				const languageElements = new Elements(template, {
+					open: '[[',
+					close: ']]',
+				});
+				return languageElements.render(lang);
 			}
 			
 			// Logout

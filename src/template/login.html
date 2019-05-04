@@ -8,8 +8,6 @@
 		<title>HFT App &middot; Anmelden</title>
 		
 		<link rel="stylesheet" href="/style/login.scss">
-		
-		{{#error}}<script>alert('{{.}}');</script>{{/error}}
 	</head>
 	<body>
 		<header>
@@ -29,7 +27,21 @@
 				</div>
 				
 				<div class="info">
-					<p>Melde dich mit deinem Konto an. Deine Daten werden verschlüsselt übertragen.</p>
+					{{#error}}
+						[[#ERROR.{{error}}]]
+							<p>[[.]]</p>
+						[[/ERROR.{{error}}]]
+						
+						[[^ERROR.{{error}}]]
+							<p>Ein unbekannter Fehler ist aufgetreten.</p>
+							<p>{{error}}</p>
+						[[/ERROR.{{error}}]]
+					{{/error}}
+					
+					{{^error}}
+						<p>Melde dich mit deinem Konto an.</p>
+						<p>Deine Daten werden verschlüsselt übertragen.</p>
+					{{/error}}
 				</div>
 			
 				<form method="POST" {{#failed}}class="shaking"{{/failed}} onsubmit="this.querySelector('button').classList.add('active')">
