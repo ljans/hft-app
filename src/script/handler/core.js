@@ -33,13 +33,13 @@ class CoreHandler {
 			version: this.controller.version,
 			username: await IDB.server.get('username'),
 			device: await IDB.server.get('device'),
-			title: '[[PAGE.'+page.toUpperCase()+'.TITLE]]',
+			title: '[[page.'+page+'.title]]',
 		}
 		
 		// Setup tabs
 		data.tabs = this.tabs.map(name => ({
 			name: name,
-			title: '[[PAGE.'+name.toUpperCase()+'.TAB]]',
+			title: '[[page.'+name+'.tab]]',
 			active: name == page
 		}));
 		
@@ -148,8 +148,8 @@ class CoreHandler {
 					
 					// Add time range
 					if(event.start <= this.today) data.range = event.end ? 'Aktuell' : 'Heute';
-					else data.range = Elements.render('{{j}}. [[DATE.F.{{n}}]]', event.start);
-					if(event.end) data.range+= ' – '+Elements.render('{{j}}. [[DATE.F.{{n}}]]', event.end);
+					else data.range = Elements.render('{{j}}. [[date.F.{{n}}]]', event.start);
+					if(event.end) data.range+= ' – '+Elements.render('{{j}}. [[date.F.{{n}}]]', event.end);
 					return data;	
 				});
 			} break;

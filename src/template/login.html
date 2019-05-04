@@ -28,14 +28,14 @@
 				
 				<div class="info">
 					{{#error}}
-						[[#ERROR.{{error}}]]
+						[[#error.{{error}}]]
 							<p>[[.]]</p>
-						[[/ERROR.{{error}}]]
+						[[/error.{{error}}]]
 						
-						[[^ERROR.{{error}}]]
+						[[^error.{{error}}]]
 							<p>Ein unbekannter Fehler ist aufgetreten.</p>
 							<p>{{error}}</p>
-						[[/ERROR.{{error}}]]
+						[[/error.{{error}}]]
 					{{/error}}
 					
 					{{^error}}

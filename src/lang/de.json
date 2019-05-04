@@ -1,45 +1,45 @@
 {
-	"PAGE": {
-		"MEALS": {
-			"TITLE": "Speiseplan",
-			"TAB": "Mensa"
+	"page": {
+		"meals": {
+			"title": "Speiseplan",
+			"tab": "Mensa"
 		},
-		"LECTURES": {
-			"TITLE": "Vorlesungsplan",
-			"TAB": "Vorlesungen"
+		"lectures": {
+			"title": "Vorlesungsplan",
+			"tab": "Vorlesungen"
 		},
-		"EVENTS": {
-			"TITLE": "Terminkalender",
-			"TAB": "Termine"
+		"events": {
+			"title": "Terminkalender",
+			"tab": "Termine"
 		},
-		"EXAMS": {
-			"TITLE": "Notenspiegel",
-			"TAB": "Noten"
+		"exams": {
+			"title": "Notenspiegel",
+			"tab": "Noten"
 		},
-		"MENU": {
-			"TITLE": "Weitere Inhalte"
+		"menu": {
+			"title": "Weitere Inhalte"
 		},
-		"COURSES": {
-			"TITLE": "Vorlesungsverzeichnis"
+		"courses": {
+			"title": "Vorlesungsverzeichnis"
 		},
-		"TIPS": {
-			"TITLE": "Tipps und Tricks"
+		"tips": {
+			"title": "Tipps und Tricks"
 		},
-		"PRINTERS": {
-			"TITLE": "Druckerstandorte"
+		"printers": {
+			"title": "Druckerstandorte"
 		},
-		"PROFESSORS": {
-			"TITLE": "Professorensuche"
+		"professors": {
+			"title": "Professorensuche"
 		},
-		"MESSAGES": {
-			"TITLE": "Mitteilungen"
+		"messages": {
+			"title": "Mitteilungen"
 		},
-		"ERROR": {
-			"TITLE": "Oh nein!"
+		"error": {
+			"title": "Oh nein!"
 		}
 	},
 	
-	"ERROR": {
+	"error": {
 		"MaintenancePeriod": [
 			"Die Server der HFT sind wegen Wartungsarbeiten nicht erreichbar.",
 			"Bitte versuche es später erneut."
@@ -50,7 +50,7 @@
 		]
 	},
 	
-	"DATE": {
+	"date": {
 		"F": [
 			null,
 			"Januar",
