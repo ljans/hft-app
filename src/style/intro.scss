@@ -192,7 +192,7 @@ footer {
 
 @media screen and (max-width: 639px) {	
 	article {
-		padding: 1em 0;
+		padding: 1.6em 0;
 		
 		.screenshot {
 			width: 100%;
@@ -208,10 +208,6 @@ footer {
 			width: 100%;
 			margin-bottom: 2em;
 			font-size: 0.9em;
-		}
-		
-		& + article {
-			padding: 1.5em 0;
 		}
 	}
 }
