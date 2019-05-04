@@ -47,6 +47,9 @@
 		"offline": [
 			"Der Server konnte nicht erreicht werden.",
 			"Bitte stelle sicher, dass du mit dem Internet verbunden bist."
+		],
+		"InvalidUser": [
+			"Das angegebene Konto entspricht nicht den Vorraussetzungen zur Nutzung der App."
 		]
 	},
 	

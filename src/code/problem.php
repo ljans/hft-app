@@ -7,5 +7,6 @@ class AccessLimit extends Problem {}
 class MaintenancePeriod extends Problem {}
 class InvalidDevice extends Problem {}
 class InvalidAction extends Problem {}
+class InvalidUser extends Problem {}
 class GatewayError extends Problem {}
 class FormatError extends Problem {}

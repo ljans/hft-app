@@ -42,6 +42,9 @@ class Controller {
 	// Perform login from cache or network
 	public function login($username, $password) {
 		
+		// Check username
+		if(!preg_match('/^\d{2}[a-z]{4}\d(?:b|m)[a-z]{2}$/', $username)) throw new InvalidUser();
+		
 		// Load cached user
 		$query['user'] = $this->db->query('SELECT username, password, displayname, enabled, valid FROM users WHERE username = ?', $username);
 		$cached = $query['user']->rowCount() == 1;
