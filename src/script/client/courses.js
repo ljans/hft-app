@@ -1,12 +1,3 @@
-// Prevent header, footer and nav from putting the scroll focus on the body
-$('header, footer, nav').on('touchmove', e => e.preventDefault());
-
-// Prevent the wrapper from scrolling to the limit and bubbling to the body
-$('.wrapper').on('touchstart', function(){
-	if(this.scrollTop <= 0) this.scrollTop = 1;
-	if(this.scrollTop >= this.scrollHeight - this.clientHeight) this.scrollTop = this.scrollHeight - this.clientHeight - 1;
-});
-
 // Course selector
 $('.subjects .item').map(item => {
 	
@@ -49,19 +40,3 @@ $('nav .save').on('click', function(){
 	this.classList.add('active');
 	document.forms[0].submit();
 }, {once: true});
-
-// Logout confirmation
-$('.logout').on('click', e => {
-	if(!confirm('Möchtest du dich wirklich abmelden?\nDadurch werden alle deine Daten auf diesem Gerät gelöscht.')) e.preventDefault();
-});
-
-// Filter professors
-$('nav input.search').on('keyup', function(){
-	let pattern = new RegExp(this.value, 'i');
-	let visible = 0;
-	document.querySelectorAll('.list .professor').forEach(professor => {
-		let matching = professor.querySelector('.title').innerHTML.match(pattern);
-		professor.classList.toggle('hidden', !matching);
-		if(matching) visible++;
-	});
-});

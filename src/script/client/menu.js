@@ -13,3 +13,8 @@ $installer.on('click', () => {
 	if(deferredPrompt) deferredPrompt.prompt();
 	else alert('Öffne die Seitenoptionen deines Browsers und wähle "Zum Startbildschirm hinzufügen".');
 });
+
+// Logout confirmation
+$('.logout').on('click', e => {
+	if(!confirm('Möchtest du dich wirklich abmelden?\nDadurch werden alle deine Daten auf diesem Gerät gelöscht.')) e.preventDefault();
+});
