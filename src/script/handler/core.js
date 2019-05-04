@@ -33,13 +33,13 @@ class CoreHandler {
 			version: this.controller.version,
 			username: await IDB.server.get('username'),
 			device: await IDB.server.get('device'),
-			title: '{{PAGE.'+page.toUpperCase()+'.TITLE}}',
+			title: '[[PAGE.'+page.toUpperCase()+'.TITLE]]',
 		}
 		
 		// Setup tabs
 		data.tabs = this.tabs.map(name => ({
 			name: name,
-			title: '{{PAGE.'+name.toUpperCase()+'.TAB}}',
+			title: '[[PAGE.'+name.toUpperCase()+'.TAB]]',
 			active: name == page
 		}));
 		
@@ -148,8 +148,8 @@ class CoreHandler {
 					
 					// Add time range
 					if(event.start <= this.today) data.range = event.end ? 'Aktuell' : 'Heute';
-					else data.range = Elements.render('{{j}}. {{DATE.F.{{n}}}}', event.start);
-					if(event.end) data.range+= ' – '+Elements.render('{{j}}. {{DATE.F.{{n}}}}', event.end);
+					else data.range = Elements.render('{{j}}. [[DATE.F.{{n}}]]', event.start);
+					if(event.end) data.range+= ' – '+Elements.render('{{j}}. [[DATE.F.{{n}}]]', event.end);
 					return data;	
 				});
 			} break;
@@ -327,12 +327,16 @@ class CoreHandler {
 		const content = await this.controller.fetch('/template/_'+page+'.html').then(response => response.text());
 		const shell = await this.controller.fetch('/template/shell.html').then(response => response.text());
 		
-		// Load language file
-		const lang = await this.controller.fetch('/lang/de.json').then(response => response.json());
-		
 		// Render html
 		const combined = shell.replace('{{>content}}', content);
 		const raw = Elements.render(combined, data);
-		return Elements.render(raw, lang);
+		
+		// Render language
+		const lang = await this.controller.fetch('/lang/de.json').then(response => response.json());
+		const languageElements = new Elements(raw, {
+			open: '[[',
+			close: ']]',
+		});
+		return languageElements.render(lang);
 	}
 }

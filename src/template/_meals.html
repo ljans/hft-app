@@ -18,7 +18,9 @@
 			<select onchange="location=this.value">
 				{{#options}}
 					<option value="/meals/{{#date}}{{Y}}-{{m}}-{{d}}{{/date}}" {{#selected}}selected{{/selected}}>
-						{{#date}}{{DATE.l.{{w}}}} &middot; {{d}}.{{m}}.{{/date}}
+						{{#date}}
+							[[DATE.l.{{w}}]] &middot; {{d}}.{{m}}.
+						{{/date}}
 					</option>
 				{{/options}}
 			</select>
