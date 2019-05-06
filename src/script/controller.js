@@ -6,7 +6,6 @@
 			exams: { autoIncrement: true },
 			meals: { autoIncrement: true },
 			lectures: { autoIncrement: true },
-			courses: { autoIncrement: true },
 			events: { autoIncrement: true },
 			professors: { autoIncrement: true },
 			messages: { autoIncrement: true },

@@ -82,19 +82,29 @@ try {
 			}
 			
 			// Add courses
-			$response['courses'] = [];
-			$query['courses'] = $controller->db->query('
-				SELECT courses.*, EXISTS(
-					SELECT * FROM enrollments 
-					WHERE enrollments.course = courses.id 
-					AND enrollments.subject = courses.subject 
-					AND enrollments.user = ?
-				) AS enrolled FROM courses 
-				ORDER BY title ASC
-			', $device['username']);
-			while($course = $query['courses']->fetch()) {
-				$course['enrolled'] = !!$course['enrolled'];
-				$response['courses'][] = $course;
+			foreach($response['subjects'] as &$subject) {
+				$subject['courses'] = [];
+				
+				// Query courses
+				$query['courses'] = $controller->db->query('
+					SELECT id, title, EXISTS(
+						SELECT * FROM enrollments 
+						WHERE enrollments.course = courses.id 
+						AND enrollments.subject = courses.subject 
+						AND enrollments.user = :username
+					) AS enrolled FROM courses 
+					WHERE subject = :subject 
+					ORDER BY title ASC
+				', [
+					'username' => $device['username'],
+					'subject' => $subject['id']
+				]);
+				
+				// Fetch result
+				while($course = $query['courses']->fetch()) {
+					$course['enrolled'] = !!$course['enrolled'];
+					$subject['courses'][] = $course;
+				}
 			}
 			
 			// Add professors

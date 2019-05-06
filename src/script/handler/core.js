@@ -54,10 +54,8 @@ class CoreHandler {
 					return Response.redirect('/lectures');
 				}
 				
-				// Load courses
-				const courses = await IDB.courses.all();
+				// Load subjects
 				data.subjects = await IDB.subjects.all();
-				data.subjects.forEach(subject => subject.courses = courses.filter(course => course.subject == subject.id));
 			} break;
 			case 'meals': {
 				const meals = await IDB.meals.all(meal => new Date(meal.date) >= this.today);
