@@ -311,10 +311,6 @@ class CoreHandler {
 		
 		// Render language
 		const lang = await this.controller.fetch('/lang/de.json').then(response => response.json());
-		const languageElements = new Elements(raw, {
-			open: '[[',
-			close: ']]',
-		});
-		return languageElements.render(lang);
+		return new Elements({open: '[[', close: ']]'}).render(raw, lang);
 	}
 }

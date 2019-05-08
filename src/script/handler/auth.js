@@ -41,11 +41,7 @@ class AuthHandler {
 				
 				// Render language
 				const lang = await this.controller.fetch('/lang/de.json').then(response => response.json());
-				const languageElements = new Elements(template, {
-					open: '[[',
-					close: ']]',
-				});
-				return languageElements.render(lang);
+				return new Elements({open: '[[', close: ']]'}).render(template, lang);
 			}
 			
 			// Logout
